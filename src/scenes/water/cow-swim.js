@@ -16,23 +16,24 @@ import PhysicsSprite from '../../physics-sprite'
 const canvas = document.getElementById('canvas')
 const innerWidth = window.innerWidth
 const innerHeight = window.innerHeight
-const gforce = 0.05
-
-const engine = Matter.Engine.create({
-  // render: {
-  //   element: document.body,
-  //   canvas: canvas,
-  //   visble: false,
-  //   options: {
-  //     width: innerWidth,
-  //     height: innerHeight,
-  //     wireframes: true,
-  //     showAngleIndicator: true,
-  //     background: 'transparent',
-  //     wireframeBackground: 'transparent',   
-  //   }
-  // }
-})
+const gforce = 0.1
+let matter_renderer = {
+  render: {
+    element: document.body,
+    canvas: canvas,
+    visble: false,
+    options: {
+      width: innerWidth,
+      height: innerHeight,
+      wireframes: true,
+      showAngleIndicator: true,
+      background: 'transparent',
+      wireframeBackground: 'transparent',   
+    }
+  }  
+}
+matter_renderer = {};
+const engine = Matter.Engine.create(matter_renderer)
 
 
 const bodies = []
@@ -49,7 +50,7 @@ export default class CowSwim extends Sprite {
     
     this.cowTex = new PIXI.Texture.fromImage(cowImg)
     this.cow = new PhysicsSprite('swimmer', engine, 0x001)
-    this.cow.init(window.innerWidth / 2, window.innerHeight / 2, 700, 422, this.cowTex);
+    this.cow.init(window.innerWidth / 2, window.innerHeight / 2, 700, 422, this.cowTex, 'circle');
     this.addChild(this.cow.sprite)
 
 

@@ -21,12 +21,10 @@ class PhysicsSprite {
   //friction: .001, restitution: .1, density: 5.5
   createPhysics () {
     let options = {
-      //frictionAir: 0,
-      friction: .001,
-      inertia: 1,
-      mass: 0.0000001,
+      frictionAir: 0.03,
+      friction: .1,
       label: this._id,
-      density: 5.5,
+      density: 205.5,
       restitution: 0.1,
       // collisionFilter: {
       //   mask: this.category
@@ -34,7 +32,7 @@ class PhysicsSprite {
     }
     //options = { friction: .001, restitution: .1, density: 5.5 }
     if (this.type === 'circle') {
-      this._body = Matter.Bodies.circle(this.x, this.y, this.width, options)
+      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 2, options)
     } else {
       this._body = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, options)
     }

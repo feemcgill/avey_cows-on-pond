@@ -19,7 +19,6 @@ export default class WaterScene extends Container {
     this.artWarp = new ArtWarp()
     this.artWarp.x = -100
     this.artWarp.y = -100
-    console.log(this.artWarp);
     this.artWarp.width = 1.1
     this.artWarp.height = 1.1
     this.addChild(this.artWarp)

@@ -33,7 +33,6 @@ export default class Example extends Container {
     this
         .on('mousemove', this.handleMove)
         .on('touchmove', this.handleMovee);  
-    console.log('asdff', app);
   }
 
   handleMove(e) {
