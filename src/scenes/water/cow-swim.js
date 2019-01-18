@@ -1,86 +1,93 @@
 import Matter from 'matter-js';
 import { Sprite, Point } from 'pixi.js';
 import {TweenMax} from "gsap/TweenMax";
-import app from '../../index';
+import app from './../../setup/app';
+import engine from './../../setup/engine';
 import {map} from '../../helpers'
-import cowImg from '../../../assets/img/swimmer.png'
 import PhysicsSprite from '../../physics-sprite'
+import {loader} from './../../index'
 
-// class Cow extends PhysicsSprite {
-//   init (x, y, width, height, texture) {
-//     super.init(x, y, width, height, texture)
-//   }
-//   spawn () {}
-// }
 
-const canvas = document.getElementById('canvas')
-const innerWidth = window.innerWidth
-const innerHeight = window.innerHeight
-const gforce = 0.1
-let matter_renderer = {
-  render: {
-    element: document.body,
-    canvas: canvas,
-    visble: false,
-    options: {
-      width: innerWidth,
-      height: innerHeight,
-      wireframes: true,
-      showAngleIndicator: true,
-      background: 'transparent',
-      wireframeBackground: 'transparent',   
-    }
-  }  
+const gforce = 10
+
+
+
+let border_bodies = [];
+function createBorders() {
+  const offset = -150;
+  if (border_bodies.length > 0) {
+    Matter.Composite.remove(engine.world, border_bodies)
+  }
+  border_bodies = [
+    Matter.Bodies.rectangle(app.renderer.width / 2, offset, app.renderer.width, 100, { isStatic: true }), // top
+    Matter.Bodies.rectangle(app.renderer.width / 2, app.renderer.height - offset, app.renderer.width, 100, { isStatic: true }), // bottom
+    Matter.Bodies.rectangle(offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // left
+    Matter.Bodies.rectangle(app.renderer.width - offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // right
+  ]
+  Matter.World.add(engine.world, border_bodies);
 }
-matter_renderer = {};
-const engine = Matter.Engine.create(matter_renderer)
+var stack = Matter.Composites.stack(0, 0, 10, 10, 0, 0, function(x, y, column, row) {
+  return Matter.Bodies.circle(x, y, Matter.Common.random(50, 50), { friction: .001, restitution: .1, density: 5.5 });
+});
+
+function createCows(){
+  const cows = [];
+  const cowTex = new PIXI.Texture.fromImage(loader.resources.swimmer.url)
 
 
-const bodies = []
-engine.world.gravity.x = 0;
-engine.world.gravity.y = 0;
+  Matter.Composites.stack(0,0, 6, 4, 0, 0, function(x, y, column, row) {
 
-var mouseConstraint = Matter.MouseConstraint.create(engine);
-Matter.World.add(engine.world, mouseConstraint);
+    const cow = new PhysicsSprite('swimmer', engine, 0x001)
+    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height), 350, 211, cowTex, 'circle')
+    // cow.scale(0.5, 0.5)
+    cows.push(cow);
+    cow.sprite.alpha = 0.8
+    cow.sprite.interactive = true
+    cow.sprite.defaultCursor = 'pointer'
+  });
+  console.log(cows.length);
+  return cows;
+}
 
 export default class CowSwim extends Sprite {
   constructor(...args) {
     super(...args);
+    const t = this;
     this.update = this.update.bind(this)
-    
-    this.cowTex = new PIXI.Texture.fromImage(cowImg)
-    this.cow = new PhysicsSprite('swimmer', engine, 0x001)
-    this.cow.init(window.innerWidth / 2, window.innerHeight / 2, 700, 422, this.cowTex, 'circle');
-    this.addChild(this.cow.sprite)
-
-
-
-    bodies.push(this.cow.body)
-    Matter.World.add(engine.world, bodies)
-    const offset = 20;
-    Matter.World.add(engine.world, [
-      Matter.Bodies.rectangle(innerWidth / 2, offset, innerWidth, 10, { isStatic: true }), // top
-      Matter.Bodies.rectangle(innerWidth / 2, innerHeight - offset, innerWidth, 10, { isStatic: true }), // bottom
-      Matter.Bodies.rectangle(offset, innerHeight / 2, 10, innerHeight, { isStatic: true }), // left
-      Matter.Bodies.rectangle(innerWidth - offset, innerHeight / 2, 10, innerHeight, { isStatic: true }), // right
-
-    ]);    
-    Matter.Engine.run(engine)
+    this.resize = this.resize.bind(this)
+    this.cows = createCows();
+    for (let i = 0; i < this.cows.length; i++) {
+      const s = this.cows[i];
+      Matter.World.add(engine.world, s.body)
+      t.addChild(s.sprite)
+    }
+    this.resize();
   }
 
+  resize() {
+    createBorders();
+    // let cowSize = 1;
+    // if (app.renderer.width < 800) {   
+    //   cowSize = 0.3;
+    // }
+    // for (let i = 0; i < this.cows.length; i++) {
+    //   const e = this.cows[i];
+    //   e.scale(cowSize, cowSize)
+    // }       
+  }
 
   update(x,y){
     const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
     const moverY = map(y, 0, app.renderer.height, -gforce, gforce);
-
     engine.world.gravity.x = moverX;
     engine.world.gravity.y = moverY;
-    // TweenMax.to(this.waterFg, 2,{x:moverX, y:moverY})
   }
 
   animate() {
-    this.cow.update()
-    //Matter.Body.setPosition(this.cow.body, { x: this.cow.body.position.x -= 0.5, y: this.cow.body.position.y })
+    for (let i = 0; i < this.cows.length; i++) {
+      const e = this.cows[i];
+      e.update()
+    }
     window.requestAnimationFrame(this.animate.bind(this))
   }
   

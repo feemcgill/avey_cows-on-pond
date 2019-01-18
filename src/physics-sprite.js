@@ -18,21 +18,20 @@ class PhysicsSprite {
     this.createPhysics()
     this.createSprite()
   }
-  //friction: .001, restitution: .1, density: 5.5
   createPhysics () {
     let options = {
-      frictionAir: 0.03,
-      friction: .1,
+      frictionAir: 0.6, //Matter.Common.random(.3, .8),
+      friction: Matter.Common.random(0.05, 0.2),
       label: this._id,
-      density: 205.5,
+      density: Matter.Common.random(2, 6),
       restitution: 0.1,
       // collisionFilter: {
       //   mask: this.category
       // }
     }
-    //options = { friction: .001, restitution: .1, density: 5.5 }
+    console.log(Matter.Common.random(3, 5))
     if (this.type === 'circle') {
-      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 2, options)
+      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, options)
     } else {
       this._body = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, options)
     }
@@ -61,6 +60,20 @@ class PhysicsSprite {
   }
   set id (id) {
     this._id = id
+  }
+
+  scale (x,y) {
+    this._sprite.scale.x = x
+    this._sprite.scale.y = y
+    if (this.type === 'circle') {
+      const currentRadius = this._body.circleRadius;
+      const ogRadius = this.width / 3;
+      const targetRadiusX = ogRadius * x;
+      const targetRadiusY = ogRadius * y;
+      const bodyScaleX = targetRadiusX / currentRadius;
+      const bodyScaleY = targetRadiusY / currentRadius;
+      Matter.Body.scale(this._body, bodyScaleX, bodyScaleY)  
+    }
   }
   update () {
     if (this._body) {

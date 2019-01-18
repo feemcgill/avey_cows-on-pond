@@ -41,12 +41,4 @@ export default class Example extends Container {
     this.iceTex.update(x,y);
   }
 
-  // mousemove(e) {
-  //   console.log('mouse mover');
-  //   const { x, y } = e.data.global;
-  //   if (this.mousepos.x !== x && this.mousepos.y !== y) {
-  //     this.mousepos.set(x, y);
-  //   }
-  //   console.log('mm',x,y);
-  // }
 }
