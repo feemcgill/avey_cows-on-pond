@@ -25,7 +25,6 @@ export default class ArtWarp extends Sprite {
   }
 
   resize() {
-    console.log('ART WARP RESIZE');
     const bgSize = backgroundSize(app.renderer.width, app.renderer.height, this.waterBgTex.baseTexture.width, this.waterBgTex.baseTexture.height);
 
     this.waterBg.scale.set(bgSize.scale);

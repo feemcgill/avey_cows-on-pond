@@ -1,5 +1,5 @@
-import { Texture } from 'pixi.js';
-import app from '../index'
+import { Texture } from 'pixi.js'
+import app from './../setup/app'
 import {map} from '../helpers'
 
 export default class VidTex extends Texture {

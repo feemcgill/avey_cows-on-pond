@@ -1,7 +1,7 @@
 import { Container, Point } from 'pixi.js';
 import {TweenMax} from "gsap/TweenMax";
 import VidTex from '../../textures/vid-tex';
-import app from '../../index';
+import app from './../../setup/app';
 import {map} from '../../helpers'
 
 
@@ -25,14 +25,12 @@ export default class WaterVidJam extends Container {
       this.addChild(sprite)
       sprite.mask = g
       this.vidSprites.push(sprite);
-      console.log(this.vidSprites); 
     }
   }
 
   update(x,y){
     var moverX = map(x, 0, app.renderer.width, 1, 20);
 
-    //this.vidTex.update(x,y);
     for (let i = 0; i < this.vidSprites.length; i++) {
       const e = this.vidSprites[i];
       TweenMax.to(e.scale, 1.2, {x: moverX, delay: (i * 0.2)})
