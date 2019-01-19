@@ -8,7 +8,6 @@ import PhysicsSprite from '../../physics-sprite'
 import {loader} from './../../index'
 
 
-const gforce = 10
 
 
 
@@ -19,7 +18,7 @@ function createBorders() {
     Matter.Composite.remove(engine.world, border_bodies)
   }
   border_bodies = [
-    Matter.Bodies.rectangle(app.renderer.width / 2, offset, app.renderer.width, 100, { isStatic: true }), // top
+    //Matter.Bodies.rectangle(app.renderer.width / 2, offset, app.renderer.width, 100, { isStatic: true }), // top
     Matter.Bodies.rectangle(app.renderer.width / 2, app.renderer.height - offset, app.renderer.width, 100, { isStatic: true }), // bottom
     Matter.Bodies.rectangle(offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // left
     Matter.Bodies.rectangle(app.renderer.width - offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // right
@@ -38,14 +37,13 @@ function createCows(){
   Matter.Composites.stack(0,0, 6, 4, 0, 0, function(x, y, column, row) {
 
     const cow = new PhysicsSprite('swimmer', engine, 0x001)
-    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height), 350, 211, cowTex, 'circle')
+    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height) - app.renderer.height, 350, 211, cowTex, 'circle')
     // cow.scale(0.5, 0.5)
     cows.push(cow);
     cow.sprite.alpha = 0.8
     cow.sprite.interactive = true
     cow.sprite.defaultCursor = 'pointer'
   });
-  console.log(cows.length);
   return cows;
 }
 
@@ -55,15 +53,26 @@ export default class CowSwim extends Sprite {
     const t = this;
     this.update = this.update.bind(this)
     this.resize = this.resize.bind(this)
+    this.transIn = this.transIn.bind(this)
+
     this.cows = createCows();
     for (let i = 0; i < this.cows.length; i++) {
       const s = this.cows[i];
+      s.sprite.alpha = 1
       Matter.World.add(engine.world, s.body)
       t.addChild(s.sprite)
     }
     this.resize();
+    setTimeout(() => {
+      this.transIn()
+    }, 3000);
   }
-
+  transIn(){
+    for (let i = 0; i < this.cows.length; i++) {
+      const s = this.cows[i];
+      TweenMax.to(s.sprite, 8, {alpha: 1, delay: i * .01, ease: Expo.easeOut})
+    }    
+  }
   resize() {
     createBorders();
     // let cowSize = 1;
@@ -76,11 +85,8 @@ export default class CowSwim extends Sprite {
     // }       
   }
 
-  update(x,y){
-    const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
-    const moverY = map(y, 0, app.renderer.height, -gforce, gforce);
-    engine.world.gravity.x = moverX;
-    engine.world.gravity.y = moverY;
+  update(){
+
   }
 
   animate() {

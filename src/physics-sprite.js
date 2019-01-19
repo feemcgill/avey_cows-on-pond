@@ -20,20 +20,19 @@ class PhysicsSprite {
   }
   createPhysics () {
     let options = {
-      frictionAir: 0.6, //Matter.Common.random(.3, .8),
-      friction: Matter.Common.random(0.05, 0.2),
+      // frictionAir: 0.6, //Matter.Common.random(.3, .8),
+      // friction: Matter.Common.random(0.05, 0.2),
       label: this._id,
-      density: Matter.Common.random(2, 6),
+      density: Matter.Common.random(.2, .6),
       restitution: 0.1,
       // collisionFilter: {
       //   mask: this.category
       // }
     }
-    console.log(Matter.Common.random(3, 5))
     if (this.type === 'circle') {
       this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, options)
     } else {
-      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, options)
+      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, options)
     }
   }
   createSprite () {
@@ -63,19 +62,19 @@ class PhysicsSprite {
   }
 
   scale (x,y) {
-    this._sprite.scale.x = x
-    this._sprite.scale.y = y
-    if (this.type === 'circle') {
-      const currentRadius = this._body.circleRadius;
-      const ogRadius = this.width / 3;
-      const targetRadiusX = ogRadius * x;
-      const targetRadiusY = ogRadius * y;
-      const bodyScaleX = targetRadiusX / currentRadius;
-      const bodyScaleY = targetRadiusY / currentRadius;
-      Matter.Body.scale(this._body, bodyScaleX, bodyScaleY)  
-    }
+    // this._sprite.scale.x = x
+    // this._sprite.scale.y = y
+    // if (this.type === 'circle') {
+    //   const currentRadius = this._body.circleRadius;
+    //   const ogRadius = this.width / 3;
+    //   const targetRadiusX = ogRadius * x;
+    //   const targetRadiusY = ogRadius * y;
+    //   const bodyScaleX = targetRadiusX / currentRadius;
+    //   const bodyScaleY = targetRadiusY / currentRadius;
+    //   Matter.Body.scale(this._body, bodyScaleX, bodyScaleY)  
+    // }
   }
-  update () {
+  update (msg) {
     if (this._body) {
       this._sprite.position = this._body.position
       this._sprite.rotation = this._body.angle
