@@ -21,6 +21,10 @@ export default class ArtWarp extends Sprite {
 
     this.addChild(this.waterBg)
     this.addChild(this.waterFg)
+
+
+
+
     this.resize();
   }
 

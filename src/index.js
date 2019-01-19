@@ -10,6 +10,8 @@ import swimmer from './../assets/img/swimmer.png'
 import waterBg from './../assets/img/water-bg.jpg'
 import waterFg from './../assets/img/water-fg.png'
 import stain from './../assets/img/stain.png'
+import text from './../assets/img/cows-text.jpg'
+import at_name from './../assets/img/at.png'
 
 document.body.appendChild(app.view);
 
@@ -32,15 +34,21 @@ loader
   .add('swimmer', swimmer)
   .add('waterBg', waterBg)
   .add('waterFg', waterFg)
+  .add('text', text)
+  .add('at_name', at_name)
 
 loader.load((loader, resources) => {
   iceScene = new IceScene(launchWater);
   iceWrap.addChild(iceScene);
+
 });
 
 function launchWater() {
   waterScene = new WaterScene();
   waterWrap.addChild(waterScene);
+  setTimeout(() => {
+    iceWrap.removeChild(iceScene)
+  }, 2000);
 }
 
 window.addEventListener("resize",function(e){
