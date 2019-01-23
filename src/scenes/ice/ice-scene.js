@@ -1,5 +1,4 @@
 import { Container, Texture, extras } from 'pixi.js'
-//import * as PIXI from 'pixi.js'
 import {TweenMax} from "gsap/TweenMax"
 import app from './../../setup/app'
 import engine from './../../setup/engine'
@@ -8,7 +7,6 @@ import {backgroundSize, map} from './../../helpers'
 import Matter from 'matter-js'
 import IceBorders from './ice-borders'
 import IceCows from './ice-cows'
-import IceBg from './ice-bg'
 import config from './../../setup/config'
 
 export default class IceScene extends Container {
@@ -72,10 +70,9 @@ export default class IceScene extends Container {
     ];
     let textureArray = [];
     
-    for (let i=0; i < vidFrameImages.length; i++)
-    {
-         let texture = PIXI.Texture.fromImage(vidFrameImages[i]);
-         textureArray.push(texture);
+    for (let i=0; i < vidFrameImages.length; i++) {
+      let texture = PIXI.Texture.fromImage(vidFrameImages[i]);
+      textureArray.push(texture);
     };
     
     this.vidBox = new PIXI.Sprite()
@@ -99,7 +96,6 @@ export default class IceScene extends Container {
     this.vidFrames.height = app.renderer.height;
     this.vidFrames.play()
 
-
     this.cows = new IceCows();
     this.addChild(this.cows);
     this.interactive = true
@@ -110,8 +106,6 @@ export default class IceScene extends Container {
     this.animate()
     this.resize()
     
-
-
     this.logo = new PIXI.Sprite.fromImage(loader.resources.at_name.url)
     this.logo.alpha = 0
     this.logo.anchor.set(0.5)

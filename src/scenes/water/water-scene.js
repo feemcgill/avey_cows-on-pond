@@ -6,13 +6,11 @@ import {map} from '../../helpers'
 import ArtWarp from './art-warp'
 import WaterCows from './water-cows'
 import WaterBorders from './water-borders'
-import waterBg from '../../../assets/img/disp-14.png'
 import loader from './../../setup/loader'
 import config from './../../setup/config'
 
-const waterTex = new PIXI.Texture.fromImage(waterBg)
+const waterTex = new PIXI.Texture.fromImage(loader.resources.displacement.url)
 const gforce = 5
-
 
 export default class WaterScene extends Container {
   constructor(callback) {
@@ -25,15 +23,10 @@ export default class WaterScene extends Container {
 
     this.useMouseGravity = false;
     this.mouseGravityTimer = null;
-
     this.WaterBorders = new WaterBorders()
-
-
     this.artWarp = new ArtWarp()
     this.artWarp.scale.set(1)
     this.addChild(this.artWarp)
-
-
     this.displacementSprite = new PIXI.Sprite(waterTex);
     this.displacementSprite.position.set(app.renderer.width / 2, app.renderer.height / 2);
     this.displacementSprite.anchor.set(0.5);
@@ -43,7 +36,6 @@ export default class WaterScene extends Container {
     this.displacementFilter.scale.x = 10;
     this.displacementFilter.scale.y = 10;
     this.resize = this.resize.bind(this)
-
     const logoTex = new PIXI.Texture.fromImage(loader.resources.text.url)
     this.logo = new PIXI.Sprite(logoTex)
     this.addChild(this.logo)
@@ -53,7 +45,6 @@ export default class WaterScene extends Container {
     this.logo.alpha = 0;
     this.logo.x = app.renderer.width / 2
     this.logo.y = app.renderer.height / 2
-
     this.interactive = true;
     this.handleMove = this.handleMove.bind(this)
     this
@@ -63,11 +54,6 @@ export default class WaterScene extends Container {
     setTimeout(() => {
       this.transitionIn()
     }, 2000);
-    document.body.onkeyup = (e) => {
-      if(e.keyCode == 32){
-          this.WaterCows.getPos();
-      }
-    }
   }
 
   transitionOut(){

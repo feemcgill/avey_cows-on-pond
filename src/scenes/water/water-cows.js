@@ -90,19 +90,8 @@ export default class CowSwim extends Sprite {
   }
 
   update(){
-
   }
-  // getPos() {
-  //   for (let i = 0; i < this.cows.length; i++) {
-  //     const e = this.cows[i];
-  //     const p = e.body.position;
-  //     if (p.y < -app.renderer.height || p.y > app.renderer.height || p.x < 0 || p.x > app.renderer.width) {
-  //       console.log('OUT OF BOUNDS', p, e)
-  //       e.destroy()
-  //     }
-  //   }    
-  // }
-  
+
   animate() {
     for (let i = 0; i < this.cows.length; i++) {
       const e = this.cows[i];
