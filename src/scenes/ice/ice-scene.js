@@ -120,18 +120,31 @@ export default class IceScene extends Container {
     this.transitionIn()
     
     const maxBottomHits = config.iceScene.bottomHits
-    let bottomHits = 0
+    this.bottomHits = 0
     Matter.Events.on(engine, 'collisionStart', (event) => {
-      var pairs = event.pairs;
+
+      const pairs = event.pairs;
       if (pairs[0].bodyB.label == 'bottomhole' || pairs[0].bodyA.label == 'bottomhole') {
-        bottomHits ++
-        this.vidFrames.animationSpeed += 0.05
-        if (bottomHits >= maxBottomHits - 3) {
-          this.pond.gotoAndStop(this.pond.currentFrame + 1)
+        console.log("   ")
+        console.log("   ")
+        console.log("   ")
+
+        console.log('hit', this.bottomHits, this.bottomHits % Math.floor(maxBottomHits / 3))
+        console.log(Math.floor(this.bottomHits % maxBottomHits/3), maxBottomHits - this.bottomHits)
+        console.log(this.bottomHits, Math.floor(this.bottomHits % maxBottomHits/3) < maxBottomHits - (this.bottomHits - 1))
+
+        if (this.bottomHits % Math.floor(maxBottomHits / 3) == 0) {
+          setTimeout(() => {
+            this.vidFrames.animationSpeed += 0.05
+            if (this.bottomHits >= maxBottomHits) {
+              this.iceBreak();
+            } else {
+              this.pond.gotoAndStop(this.pond.currentFrame + 1)
+            }
+          }, 400);
         }
-        if (bottomHits == maxBottomHits) {
-          this.iceBreak();
-        }
+
+        this.bottomHits ++
       }
     });    
   }
@@ -145,24 +158,26 @@ export default class IceScene extends Container {
     
     this.pond.play();
     this.pond.onComplete = () => {
-
-      TweenMax.to(this.pond.scale, 1, {x: 10, y: 10})
-      TweenMax.to(this.vidFrames, 1, {alpha: 0})
-      TweenMax.to(this.logo.scale, 2, {x: 0, y:0})
+      setTimeout(() => {
+        TweenMax.to(this.pond.scale, 1, {x: 10, y: 10})
+        TweenMax.to(this.vidFrames, 1, {alpha: 0})
+        TweenMax.to(this.logo.scale, 2, {x: 0, y:0})       
+      }, 200);
+ 
 
       this.cows.end()
 
       setTimeout(() => {
         this.transitionOut()
-      }, 1000);
+      }, 2000);
     }
     setTimeout(() => {
       this.iceBorders.dropBottom();
-    }, 300);    
+    }, 100);    
   }
 
   transitionIn() {
-    TweenMax.to(this.logo, 5, {alpha: 1, delay: 2})
+    TweenMax.to(this.logo, 5, {alpha: 0.7, delay: 2})
     TweenMax.to(this, 6, {alpha: 1, onComplete:() => {
       this.cows.sendCows();
     }})

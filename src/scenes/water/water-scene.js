@@ -57,11 +57,14 @@ export default class WaterScene extends Container {
   }
 
   transitionOut(){
-    this.callback();
     this.WaterCows.transitionOut()
     this.WaterBorders.removeBorders()
     clearTimeout(this.mouseGravityTimer)
     clearTimeout(this.waterTimer)
+    TweenMax.to(this.logo, 0.2, {alpha: 0})
+    TweenMax.to(this, 2, {alpha:0, onComplete: () => {
+      this.callback();
+    }})
   }
 
   transitionIn() {
