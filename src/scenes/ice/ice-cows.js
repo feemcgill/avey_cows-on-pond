@@ -2,10 +2,11 @@ import { Sprite, Texture, Container } from 'pixi.js'
 import {TweenMax} from "gsap/TweenMax"
 import app from './../../setup/app'
 import engine from './../../setup/engine';
-import {loader} from './../../index'
+import loader from './../../setup/loader'
 import {backgroundSize} from './../../helpers'
 import Matter from 'matter-js'
 import PhysicsSprite from '../../physics-sprite'
+import config from './../../setup/config'
 
 const cow_physics  = {
   frictionAir: 100, //Matter.Common.random(.3, .8),
@@ -15,17 +16,9 @@ const cow_physics  = {
 }
 
 
-
-
-
-
-
 export default class Cows extends Container {
   constructor() {
     super()
-    this.state = {
-      maxCows: 6
-    }
 
     const cowImages = [
       loader.resources.walker_1.url,
@@ -43,11 +36,6 @@ export default class Cows extends Container {
       this.cowTextures.push(cowTex);
     }
     
-    
-
-    
-
-    
     this.sendCowsInterval = null
     this.resize = this.resize.bind(this)
     this.animate = this.animate.bind(this)
@@ -63,34 +51,40 @@ export default class Cows extends Container {
   createCow() {
     let startX = app.renderer.width + 200
     if (this.cows.length % 2 == 0) {
-      startX = -200
+      startX = -170
     }
     this.cowIndex = (this.cowIndex + 1) % this.cowTextures.length
 
     const cow = new PhysicsSprite('swimmer-' + this.cows.length, engine, 0x001)
-    cow.init(startX, 200, 175, 105, this.cowTextures[this.cowIndex], 'rectangle', cow_physics)
+
+    const width = this.cowTextures[this.cowIndex].orig.width * 0.33
+    const height = this.cowTextures[this.cowIndex].orig.height * 0.33
+
+    cow.init(startX, 200, width, height, this.cowTextures[this.cowIndex], 'rectangle', cow_physics)
+
     Matter.World.add(engine.world, cow.body)
+
     cow.drown = function(){
       TweenMax.to(cow.sprite, .13, {alpha: 0});
-      // TweenMax.to(cow.sprite.scale, .3, {x: 0.3, y: 0.3, onComplete: () => {
-      // }})
       setTimeout(() => {
         cow.destroy()
       }, 500);
     }
-    cow.isDead = false;
+
     cow.update()
     if (this.cows.length % 2 == 0) {
-      cow.sprite.scale.x= -0.25;
+      cow.sprite.scale.x= -0.33;
     } 
+
     this.addChild(cow.sprite)    
     this.cows.push(cow)
 
   }
+
   sendCows(){
       this.createCow()
       this.sendCowsInterval = setInterval(() => {
-        if (this.cows.length < this.state.maxCows) {
+        if (this.cows.length < config.iceScene.maxCows) {
           this.createCow()
         } else {
           clearInterval(this.sendCowsInterval)
@@ -98,11 +92,6 @@ export default class Cows extends Container {
       }, 3500);
   }
 
-  resize() {
-  }
-
-  handleMove() {
-  }
   end() {
     clearInterval(this.sendCowsInterval)
     for (let i = 0; i < this.cows.length; i++) {
@@ -110,8 +99,7 @@ export default class Cows extends Container {
       e.drown();
     }    
   }
-  update(){
-  }
+
   animate() {
     for (let i = 0; i < this.cows.length; i++) {
       const e = this.cows[i];
@@ -120,6 +108,14 @@ export default class Cows extends Container {
          e.drown();
       }
     }
-  }  
+  }
 
+  update(){
+  }
+
+  resize() {
+  }
+
+  handleMove() {
+  }  
 }

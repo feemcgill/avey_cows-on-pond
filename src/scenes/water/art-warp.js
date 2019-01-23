@@ -2,12 +2,11 @@ import { Sprite, Point } from 'pixi.js';
 import {TweenMax} from "gsap/TweenMax";
 import app from './../../setup/app';
 import {map, backgroundSize} from '../../helpers'
-import {loader} from './../../index'
+import loader from './../../setup/loader'
 
 export default class ArtWarp extends Sprite {
   constructor(...args) {
     super(...args);
-    console.log(app)
     this.update = this.update.bind(this)
     this.resize = this.resize.bind(this)
 

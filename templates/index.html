@@ -2,7 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script>
+      var ww = window.innerWidth;
+      if (ww < 800) {
+        document.write('<meta name="viewport" content="width=1000, initial-scale=1, user-scalable=no">');
+      } else {
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">');
+      }
+    </script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <base href="/"/>
     <!-- ICONS / WEBAPP -->

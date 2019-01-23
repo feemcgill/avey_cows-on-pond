@@ -18,31 +18,32 @@ export default class IceBorders {
   }
   createBorders() {
     const offset = 150;
-    const frame_offset = -500
+    const frame_offset = 200
     const iceDrop_width = 800
-    const borderThickness = 20
+    const borderThickness = 100
+    const rampThickness = 20
 
-    this.top = Matter.Bodies.rectangle(app.renderer.width / 2, frame_offset, app.renderer.width, borderThickness, { isStatic: true })
-    this.left = Matter.Bodies.rectangle(frame_offset, app.renderer.height / 2, borderThickness, app.renderer.height, { isStatic: true })
-    this.right = Matter.Bodies.rectangle(app.renderer.width - frame_offset, app.renderer.height / 2, borderThickness, app.renderer.height, { isStatic: true })
+    this.top = Matter.Bodies.rectangle(app.renderer.width / 2, -frame_offset, app.renderer.width, borderThickness, { isStatic: true })
+    this.left = Matter.Bodies.rectangle(-frame_offset, app.renderer.height / 2, borderThickness, app.renderer.height, { isStatic: true })
+    this.right = Matter.Bodies.rectangle(app.renderer.width + frame_offset, app.renderer.height / 2, borderThickness, app.renderer.height, { isStatic: true })
 
-    this.bottom = Matter.Bodies.rectangle(app.renderer.width / 2, app.renderer.height / 1.2, app.renderer.width, 100, { label: 'bottomhole',isStatic: true })
+    this.bottom = Matter.Bodies.rectangle(app.renderer.width / 2, app.renderer.height / 1.2, app.renderer.width * 2, 100, { label: 'bottomhole',isStatic: true })
     
     
     this.ramp_left =  Matter.Bodies.rectangle(
       -(iceDrop_width) / 3,
-      app.renderer.height - offset * 2.5, 
+      app.renderer.height - offset * 1.5, 
       app.renderer.width, 
-      borderThickness, 
+      rampThickness, 
       { isStatic: true }
     )
   
     this.ramp_right =  Matter.Bodies.rectangle(
-        app.renderer.width + (iceDrop_width) / 3,
-        app.renderer.height - offset * 2.5, 
-        app.renderer.width, 
-        borderThickness, 
-        { isStatic: true }
+      app.renderer.width + (iceDrop_width) / 3,
+      app.renderer.height - offset * 1.5, 
+      app.renderer.width, 
+      rampThickness, 
+      { isStatic: true }
     )
     Matter.Body.rotate(this.ramp_left, Math.PI/45)
     Matter.Body.rotate(this.ramp_right, -Math.PI/45)
@@ -56,7 +57,6 @@ export default class IceBorders {
       this.ramp_left,
     ]
     Matter.World.add(engine.world, this.borderBodies);
-    console.log('border_boddies', this.borderBodies);
   }
   removeBorders() {
     if (this.borderBodies.length > 0) {
@@ -64,7 +64,6 @@ export default class IceBorders {
     }    
   }
   dropBottom() {
-    console.log('drop bottom', this.bottom)
     Matter.Composite.remove(engine.world, this.bottom)
   }
 }

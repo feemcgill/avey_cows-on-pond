@@ -59,9 +59,9 @@ const build = (env, options) => {
         cleanOptions
       ),
       new HtmlWebpackPlugin({
-        title: "Website Title",
-        description: "Website Description",
-        site_url: "http://website.url",
+        title: "Avey Tare |||| Cows on Hourglass Pond",
+        description: "",
+        site_url: "",
         template: './templates/index.html'
       }),
       new CopyWebpackPlugin([

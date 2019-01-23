@@ -5,29 +5,8 @@ import app from './../../setup/app';
 import engine from './../../setup/engine';
 import {map} from '../../helpers'
 import PhysicsSprite from '../../physics-sprite'
-import {loader} from './../../index'
+import loader from './../../setup/loader'
 
-
-
-
-
-let border_bodies = [];
-function createBorders() {
-  const offset = -150;
-  if (border_bodies.length > 0) {
-    Matter.Composite.remove(engine.world, border_bodies)
-  }
-  border_bodies = [
-    //Matter.Bodies.rectangle(app.renderer.width / 2, offset, app.renderer.width, 100, { isStatic: true }), // top
-    Matter.Bodies.rectangle(app.renderer.width / 2, app.renderer.height - offset, app.renderer.width, 100, { isStatic: true }), // bottom
-    Matter.Bodies.rectangle(offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // left
-    Matter.Bodies.rectangle(app.renderer.width - offset, app.renderer.height / 2, 100, app.renderer.height, { isStatic: true }), // right
-  ]
-  Matter.World.add(engine.world, border_bodies);
-}
-var stack = Matter.Composites.stack(0, 0, 10, 10, 0, 0, function(x, y, column, row) {
-  return Matter.Bodies.circle(x, y, Matter.Common.random(50, 50), { friction: .001, restitution: .1, density: 5.5 });
-});
 
 function createCows(){
   const cows = [];
@@ -45,12 +24,23 @@ function createCows(){
   }
 
   let cowIndex = 0
-
+  let twistCow = false;
   Matter.Composites.stack(0,0, 6, 4, 0, 0, function(x, y, column, row) {
     cowIndex = (cowIndex + 1) % cowTextures.length
     const cow = new PhysicsSprite('swimmer', engine, 0x001)
-    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height) - app.renderer.height, 350, 211, cowTextures[cowIndex], 'circle')
-    // cow.scale(0.5, 0.5)
+    const width = cowTextures[cowIndex].orig.width / 2
+    const height = cowTextures[cowIndex].orig.height / 2
+    cow.init(
+      Matter.Common.random(0,app.renderer.width), 
+      Matter.Common.random(0,app.renderer.height) - app.renderer.height, 
+      width, 
+      height, 
+      cowTextures[cowIndex], 
+      'circle'
+    )
+    if (twistCow) {
+      cow.sprite.scale.x = -0.5
+    }    
     cows.push(cow);
     cow.sprite.alpha = 0.8
     cow.sprite.interactive = true
@@ -58,16 +48,7 @@ function createCows(){
     cow.sprite.interactive = true
     cow.sprite.buttonmode = true
     cow.sprite.cursor = 'pointer'
-    cow.sprite
-      .on('tap', () => {
-        console.log('ITS A CLICK tapp tap');
-      })
-      .on('mouseover', () => {
-        console.log('MOUSE ME');
-      })      
-      .on('click', () => {
-        console.log('ITS A CLICK');
-      });
+    twistCow = !twistCow
   });
   return cows;
 }
@@ -78,7 +59,7 @@ export default class CowSwim extends Sprite {
     const t = this;
     this.update = this.update.bind(this)
     this.resize = this.resize.bind(this)
-    this.transIn = this.transIn.bind(this)
+    this.transitionIn = this.transitionIn.bind(this)
 
     this.cows = createCows();
     for (let i = 0; i < this.cows.length; i++) {
@@ -89,44 +70,44 @@ export default class CowSwim extends Sprite {
     }
     this.resize();
     setTimeout(() => {
-      this.transIn()
+      this.transitionIn()
     }, 3000);
   }
-  transIn(){
+  transitionIn(){
     for (let i = 0; i < this.cows.length; i++) {
       const s = this.cows[i];
       TweenMax.to(s.sprite, 8, {alpha: 1, delay: i * .01, ease: Expo.easeOut})
     }    
   }
-  transOut(){
+  transitionOut(){
     for (let i = 0; i < this.cows.length; i++) {
       const s = this.cows[i];
       s.destroy();
     }   
-
-    Matter.Composite.remove(engine.world, border_bodies);
-
   }
+
   resize() {
-    createBorders();
-    // let cowSize = 1;
-    // if (app.renderer.width < 800) {   
-    //   cowSize = 0.3;
-    // }
-    // for (let i = 0; i < this.cows.length; i++) {
-    //   const e = this.cows[i];
-    //   e.scale(cowSize, cowSize)
-    // }       
   }
 
   update(){
 
   }
-
+  // getPos() {
+  //   for (let i = 0; i < this.cows.length; i++) {
+  //     const e = this.cows[i];
+  //     const p = e.body.position;
+  //     if (p.y < -app.renderer.height || p.y > app.renderer.height || p.x < 0 || p.x > app.renderer.width) {
+  //       console.log('OUT OF BOUNDS', p, e)
+  //       e.destroy()
+  //     }
+  //   }    
+  // }
+  
   animate() {
     for (let i = 0; i < this.cows.length; i++) {
       const e = this.cows[i];
       e.update()
+
     }
     window.requestAnimationFrame(this.animate.bind(this))
   }

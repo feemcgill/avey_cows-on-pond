@@ -3,13 +3,13 @@ import { Container, Texture, extras } from 'pixi.js'
 import {TweenMax} from "gsap/TweenMax"
 import app from './../../setup/app'
 import engine from './../../setup/engine'
-import {loader} from './../../index'
+import loader from './../../setup/loader'
 import {backgroundSize, map} from './../../helpers'
 import Matter from 'matter-js'
 import IceBorders from './ice-borders'
 import IceCows from './ice-cows'
 import IceBg from './ice-bg'
-
+import config from './../../setup/config'
 
 export default class IceScene extends Container {
   constructor(callback) {
@@ -21,7 +21,7 @@ export default class IceScene extends Container {
       TweenMax.to(this.vidFrames, 2, {animationSpeed: 0.6, onComplete:() => {
         this.iceBreak()
       }})
-    }, 20000);
+    }, config.iceScene.timer);
 
     engine.timing.timeScale = 1;
     engine.world.gravity.x = 0;
@@ -37,15 +37,16 @@ export default class IceScene extends Container {
     this.pondTex = Texture.fromImage(loader.resources.pond.url)
 
     let pondCrackSequence = [
-      './../assets/img/pondinverse.jpg',
-      './../assets/img/pond/pond-crack-1.jpg',
-      './../assets/img/pond/pond-crack-2.jpg',
-      './../assets/img/pond/pond-crack-3.jpg',
-      './../assets/img/pond/pond-crack-4.jpg',
-      './../assets/img/pond/pond-crack-5.jpg',
-      './../assets/img/pond/pond-crack-6.jpg',
-      './../assets/img/pond/pond-crack-7.jpg'
+      loader.resources.pond.url,
+      loader.resources.pond_crack_1.url,
+      loader.resources.pond_crack_2.url,
+      loader.resources.pond_crack_3.url,
+      loader.resources.pond_crack_4.url,
+      loader.resources.pond_crack_5.url,
+      loader.resources.pond_crack_6.url,
+      loader.resources.pond_crack_7.url
     ];
+
     let pondTextureArray = [];
     
     for (let i=0; i < pondCrackSequence.length; i++)
@@ -62,12 +63,12 @@ export default class IceScene extends Container {
     this.addChild(this.pond )
     
     let vidFrameImages = [
-      './../assets/img/vid-frames/vid1.jpg',
-      './../assets/img/vid-frames/vid2.jpg',
-      './../assets/img/vid-frames/vid3.jpg',
-      './../assets/img/vid-frames/vid4.jpg',
-      './../assets/img/vid-frames/vid5.jpg',
-      './../assets/img/vid-frames/vid6.jpg'
+      loader.resources.vid1.url,
+      loader.resources.vid2.url,
+      loader.resources.vid3.url,
+      loader.resources.vid4.url,
+      loader.resources.vid5.url,
+      loader.resources.vid6.url
     ];
     let textureArray = [];
     
@@ -77,10 +78,19 @@ export default class IceScene extends Container {
          textureArray.push(texture);
     };
     
-    this.vidFrames = new PIXI.extras.AnimatedSprite(textureArray);
-    this.vidFrames.mask = this.pond    
+    this.vidBox = new PIXI.Sprite()
+    this.vidBox.mask = this.pond    
+    this.addChild(this.vidBox)
 
-    this.addChild(this.vidFrames);
+    this.vidGpx = new PIXI.Graphics();
+    this.vidGpx.beginFill(0x000000)
+    this.vidGpx.drawRect(0, 0, app.renderer.width, app.renderer.height)
+    this.vidGpx.endFill()
+    this.vidBox.addChild(this.vidGpx)
+
+    this.vidFrames = new PIXI.extras.AnimatedSprite(textureArray)
+    this.vidBox.addChild(this.vidFrames);
+
     this.vidFrames.anchor.set(0.5)
     this.vidFrames.x = app.renderer.width / 2
     this.vidFrames.y = app.renderer.height / 2
@@ -99,8 +109,10 @@ export default class IceScene extends Container {
         .on('touchmove', this.handleMovee)         
     this.animate()
     this.resize()
+    
 
-    this.logo = new PIXI.Sprite.fromImage('./../assets/img/at.png')
+
+    this.logo = new PIXI.Sprite.fromImage(loader.resources.at_name.url)
     this.logo.alpha = 0
     this.logo.anchor.set(0.5)
     this.logo.scale.set(0.5)
@@ -113,7 +125,7 @@ export default class IceScene extends Container {
     // Reveal the scene
     this.transitionIn()
     
-    const maxBottomHits = 10
+    const maxBottomHits = config.iceScene.bottomHits
     let bottomHits = 0
     Matter.Events.on(engine, 'collisionStart', (event) => {
       var pairs = event.pairs;
@@ -132,11 +144,20 @@ export default class IceScene extends Container {
 
   iceBreak(){
     clearTimeout(this.iceBreakTimer)
+
+    setTimeout(() => {
+      this.iceBorders.dropBottom();
+    }, 300);        
+    
     this.pond.play();
     this.pond.onComplete = () => {
-      setTimeout(() => {
-        this.cows.end()
-      }, 2000);
+
+      TweenMax.to(this.pond.scale, 1, {x: 10, y: 10})
+      TweenMax.to(this.vidFrames, 1, {alpha: 0})
+      TweenMax.to(this.logo.scale, 2, {x: 0, y:0})
+
+      this.cows.end()
+
       setTimeout(() => {
         this.transitionOut()
       }, 1000);
@@ -153,8 +174,9 @@ export default class IceScene extends Container {
     }})
   }
   transitionOut(){
+    TweenMax.to(this.vidFrames, 0.5, {alpha: 0})
+    TweenMax.to(this, 5, {alpha: 0})
     this.callback();
-    TweenMax.to(this, 2, {alpha: 0})
     this.iceBorders.removeBorders();
   }
 
@@ -176,9 +198,7 @@ export default class IceScene extends Container {
       x: app.renderer.width/2 + (moverX * 1), 
       y: 170  + (moverY * 1)
     })
-    //TweenMax.to(this.logo.scale, 3, {x: textScale, y:textScale})
-    // const aniSpeed = map(y, 0, app.renderer.height, 0.05, 0.2);
-    // TweenMax.to(this.vidFrames,1,{animationSpeed:aniSpeed})
+
   }
 
   update(){

@@ -24,17 +24,27 @@ class PhysicsSprite {
     this.createSprite()
     //this.options = (options === undefined? default_options : options)
     this.options = default_options
-    console.log('options', options, this.options)
   }
   createPhysics () {
 
     if (this.type === 'circle') {
-      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, {frictionAir: 0, friction: 0, frictionStatic: 0, restitution: 0.5})
+      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, {
+        frictionAir: 0,
+        friction: 0,
+        frictionStatic: 0,
+        density: Matter.Common.random(.2, .6), 
+        restitution: 0.5}
+      )
     } else {
-      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, {frictionAir: 0.03, friction: 0, frictionStatic: 1, restitution: 0})
+      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, {
+        frictionAir: 0.03,
+        friction: 0,
+        density: Matter.Common.random(.2, .6),
+        frictionStatic: 1,
+        restitution: 0}
+        )
     }
     this._body.label = this._id
-    console.log(this._body)
   }
   createSprite () {
     this._sprite = new PIXI.Sprite(this.texture)
