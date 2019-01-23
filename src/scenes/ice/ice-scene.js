@@ -131,12 +131,12 @@ export default class IceScene extends Container {
 
         console.log('hit', this.bottomHits, this.bottomHits % Math.floor(maxBottomHits / 3))
         console.log(Math.floor(this.bottomHits % maxBottomHits/3), maxBottomHits - this.bottomHits)
-        console.log(this.bottomHits, Math.floor(this.bottomHits % maxBottomHits/3) < maxBottomHits - (this.bottomHits - 1))
+        console.log(this.bottomHits, Math.floor(this.bottomHits % maxBottomHits/3) < maxBottomHits - this.bottomHits)
 
         if (this.bottomHits % Math.floor(maxBottomHits / 3) == 0) {
           setTimeout(() => {
             this.vidFrames.animationSpeed += 0.05
-            if (this.bottomHits >= maxBottomHits) {
+            if ( maxBottomHits - this.bottomHits < 3) {
               this.iceBreak();
             } else {
               this.pond.gotoAndStop(this.pond.currentFrame + 1)
