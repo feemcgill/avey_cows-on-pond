@@ -10,28 +10,20 @@ import waterBg from '../../../assets/img/disp-14.png'
 import {loader} from './../../index'
 
 const waterTex = new PIXI.Texture.fromImage(waterBg)
-const gforce = 5
+const gforce = .5
 
 
 export default class WaterScene extends Container {
-  constructor(...args) {
-    super(...args);
+  constructor(callback) {
+    super();
+    this.callback = callback;
 
-    engine.timing.timeScale = .1;
-    engine.world.gravity.x = 0;
-    engine.world.gravity.y = 5;
-    
+    this.useMouseGravity = false;
+    this.mouseGravityTimer = null;
+
     this.artWarp = new ArtWarp()
-    // this.artWarp.x = -100
-    // this.artWarp.y = -100
-    // this.artWarp.width = 1.1
-    // this.artWarp.height = 1.1
+    this.artWarp.scale.set(1)
     this.addChild(this.artWarp)
-
-    this.cowSwim = new CowSwim()
-    this.addChild(this.cowSwim)
-    this.cowSwim.animate();
-
 
 
     this.displacementSprite = new PIXI.Sprite(waterTex);
@@ -53,6 +45,7 @@ export default class WaterScene extends Container {
     this.addChild(this.logo)
     this.logo.blendMode = PIXI.BLEND_MODES.SCREEN  
     this.logo.anchor.set(0.5)
+    this.logo.alpha = 0;
     this.logo.x = app.renderer.width / 2
     this.logo.y = app.renderer.height / 2
 
@@ -62,10 +55,37 @@ export default class WaterScene extends Container {
         .on('mousemove', this.handleMove)
         .on('touchmove', this.handleMovee);  
   
+    setTimeout(() => {
+      this.transitionIn()
+    }, 1000);
+    document.body.onkeyup = (e) => {
+        if(e.keyCode == 32){
+           this.transitionOut();
+           //this.callback();
 
+        }
+    }
   }
 
-
+  transitionOut(){
+    console.log('water transition OUT')
+    this.callback();
+    this.cowSwim.transOut();
+    clearTimeout(this.mouseGravityTimer)
+  }
+  transitionIn() {
+    engine.timing.timeScale = .1;
+    engine.world.gravity.y = 5;
+    
+    TweenMax.to(this.logo, 5, {alpha: 1})
+    this.cowSwim = new CowSwim()
+    this.addChild(this.cowSwim)
+    this.cowSwim.animate();
+    this.mouseGravityTimer = setTimeout(() => {
+      this.useMouseGravity = true
+      clearTimeout(this.mouseGravityTimer)
+    }, 1000);
+  }
   resize() {
     this.artWarp.resize()
     this.cowSwim.resize()
@@ -79,8 +99,11 @@ export default class WaterScene extends Container {
 
     const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
     const moverY = map(y, 0, app.renderer.height, -gforce, gforce);
-    engine.world.gravity.x = moverX;
-    engine.world.gravity.y = moverY;
+    
+    if (this.useMouseGravity == true) {
+      engine.world.gravity.x = moverX;
+      engine.world.gravity.y = moverY;
+    }
 
     const textScale = map(y, 0, app.renderer.height, 0.8, 1)
     TweenMax.to(this.logo.scale, 3, {x: textScale, y:textScale})

@@ -7,14 +7,47 @@ import {backgroundSize} from './../../helpers'
 import Matter from 'matter-js'
 import PhysicsSprite from '../../physics-sprite'
 
+const cow_physics  = {
+  frictionAir: 100, //Matter.Common.random(.3, .8),
+  friction: 100, //Matter.Common.random(0.05, 0.2),
+  density: 0.1, //Matter.Common.random(1000.2, 1000.6),
+  restitution: 0
+}
+
+
+
+
+
 
 
 export default class Cows extends Container {
   constructor() {
     super()
     this.state = {
-      maxCows: 25
+      maxCows: 6
     }
+
+    const cowImages = [
+      loader.resources.walker_1.url,
+      loader.resources.walker_2.url,
+      loader.resources.grazer_1.url,
+      loader.resources.grazer_2.url,
+      loader.resources.walker_3.url
+    ]
+
+    this.cowTextures = [];
+    this.cowIndex = 0
+    for (let i = 0; i < cowImages.length; i++) {
+      const e = cowImages[i];
+      const cowTex = new PIXI.Texture.fromImage(e)
+      this.cowTextures.push(cowTex);
+    }
+    
+    
+
+    
+
+    
     this.sendCowsInterval = null
     this.resize = this.resize.bind(this)
     this.animate = this.animate.bind(this)
@@ -32,15 +65,18 @@ export default class Cows extends Container {
     if (this.cows.length % 2 == 0) {
       startX = -200
     }
-    
+    this.cowIndex = (this.cowIndex + 1) % this.cowTextures.length
+
     const cow = new PhysicsSprite('swimmer-' + this.cows.length, engine, 0x001)
-    cow.init(startX, 200, 175, 105, this.cowTex, 'rectangle')
+    cow.init(startX, 200, 175, 105, this.cowTextures[this.cowIndex], 'rectangle', cow_physics)
     Matter.World.add(engine.world, cow.body)
     cow.drown = function(){
-      TweenMax.to(cow.sprite, .3, {alpha: 0});
-      TweenMax.to(cow.sprite.scale, .3, {x: 0.3, y: 0.3, onComplete: () => {
+      TweenMax.to(cow.sprite, .13, {alpha: 0});
+      // TweenMax.to(cow.sprite.scale, .3, {x: 0.3, y: 0.3, onComplete: () => {
+      // }})
+      setTimeout(() => {
         cow.destroy()
-      }})
+      }, 500);
     }
     cow.isDead = false;
     cow.update()
@@ -80,7 +116,7 @@ export default class Cows extends Container {
     for (let i = 0; i < this.cows.length; i++) {
       const e = this.cows[i];
       e.update()
-      if (e.body.position.y > app.renderer.height - 150) {
+      if (e.body.position.y > app.renderer.height / 1.15) {
          e.drown();
       }
     }

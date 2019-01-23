@@ -31,18 +31,43 @@ var stack = Matter.Composites.stack(0, 0, 10, 10, 0, 0, function(x, y, column, r
 
 function createCows(){
   const cows = [];
-  const cowTex = new PIXI.Texture.fromImage(loader.resources.swimmer.url)
+  const cowImages = [
+    loader.resources.swimmer_1.url,
+    loader.resources.swimmer_2.url,
+    loader.resources.swimmer_3.url
+  ]
+  const cowTextures = [];
 
+  for (let i = 0; i < cowImages.length; i++) {
+    const e = cowImages[i];
+    const cowTex = new PIXI.Texture.fromImage(e)
+    cowTextures.push(cowTex);
+  }
+
+  let cowIndex = 0
 
   Matter.Composites.stack(0,0, 6, 4, 0, 0, function(x, y, column, row) {
-
+    cowIndex = (cowIndex + 1) % cowTextures.length
     const cow = new PhysicsSprite('swimmer', engine, 0x001)
-    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height) - app.renderer.height, 350, 211, cowTex, 'circle')
+    cow.init(Matter.Common.random(0,app.renderer.width), Matter.Common.random(0,app.renderer.height) - app.renderer.height, 350, 211, cowTextures[cowIndex], 'circle')
     // cow.scale(0.5, 0.5)
     cows.push(cow);
     cow.sprite.alpha = 0.8
     cow.sprite.interactive = true
     cow.sprite.defaultCursor = 'pointer'
+    cow.sprite.interactive = true
+    cow.sprite.buttonmode = true
+    cow.sprite.cursor = 'pointer'
+    cow.sprite
+      .on('tap', () => {
+        console.log('ITS A CLICK tapp tap');
+      })
+      .on('mouseover', () => {
+        console.log('MOUSE ME');
+      })      
+      .on('click', () => {
+        console.log('ITS A CLICK');
+      });
   });
   return cows;
 }
@@ -72,6 +97,15 @@ export default class CowSwim extends Sprite {
       const s = this.cows[i];
       TweenMax.to(s.sprite, 8, {alpha: 1, delay: i * .01, ease: Expo.easeOut})
     }    
+  }
+  transOut(){
+    for (let i = 0; i < this.cows.length; i++) {
+      const s = this.cows[i];
+      s.destroy();
+    }   
+
+    Matter.Composite.remove(engine.world, border_bodies);
+
   }
   resize() {
     createBorders();

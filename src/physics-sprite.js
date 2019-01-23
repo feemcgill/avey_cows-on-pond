@@ -1,5 +1,10 @@
 import * as PIXI from 'pixi.js'
 import Matter from 'matter-js';
+const default_options = {
+  friction: 0,
+  // density: Matter.Common.random(.2, .6),
+  // restitution: 1,
+}
 
 class PhysicsSprite {
   constructor (id, engine, category) {
@@ -8,7 +13,7 @@ class PhysicsSprite {
     this.category = category
     this.isAlive = true
   }
-  init (x, y, width, height, texture, type) {
+  init (x, y, width, height, texture, type, options) {
     this.x = x
     this.y = y
     this.width = width
@@ -17,23 +22,19 @@ class PhysicsSprite {
     this.type = type
     this.createPhysics()
     this.createSprite()
+    //this.options = (options === undefined? default_options : options)
+    this.options = default_options
+    console.log('options', options, this.options)
   }
   createPhysics () {
-    let options = {
-      // frictionAir: 0.6, //Matter.Common.random(.3, .8),
-      // friction: Matter.Common.random(0.05, 0.2),
-      label: this._id,
-      density: Matter.Common.random(.2, .6),
-      restitution: 0.1,
-      // collisionFilter: {
-      //   mask: this.category
-      // }
-    }
+
     if (this.type === 'circle') {
-      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, options)
+      this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, {frictionAir: 0, friction: 0, frictionStatic: 0, restitution: 0.5})
     } else {
-      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, options)
+      this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, {frictionAir: 0.03, friction: 0, frictionStatic: 1, restitution: 0})
     }
+    this._body.label = this._id
+    console.log(this._body)
   }
   createSprite () {
     this._sprite = new PIXI.Sprite(this.texture)
