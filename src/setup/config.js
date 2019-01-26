@@ -6,7 +6,7 @@ const config = {
     sendCowsTimer: 3000,
   },
   waterScene: {
-    timer: 120000,
+    timer: 20000,
     maxCows: 20,
 
   }

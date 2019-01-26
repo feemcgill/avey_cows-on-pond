@@ -9,9 +9,7 @@ export default class WaterBorders {
    this.offset = -50
    this.border_bodies = []
    this.squeeze = this.squeeze.bind(this)
-   setTimeout(() => {
-     this.squeeze()
-   }, 3000);
+
  }
 
  squeeze() {
@@ -57,7 +55,10 @@ export default class WaterBorders {
       { isStatic: true }
     ), // right
   ]
-  Matter.World.add(engine.world, this.border_bodies);   
+  Matter.World.add(engine.world, this.border_bodies);
+  setTimeout(() => {
+    this.squeeze()
+  }, 3000); 
  }
  removeBorders(){
   Matter.Composite.remove(engine.world, this.border_bodies);

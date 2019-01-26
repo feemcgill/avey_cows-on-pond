@@ -9,7 +9,6 @@ import WaterBorders from './water-borders'
 import loader from './../../setup/loader'
 import config from './../../setup/config'
 
-const waterTex = new PIXI.Texture.fromImage(loader.resources.displacement.url)
 const gforce = 0.5
 
 export default class WaterScene extends Container {
@@ -19,10 +18,8 @@ export default class WaterScene extends Container {
 
 
 
+    this.waterTimer = null
 
-    this.waterTimer = setTimeout(() => {
-      this.transitionOut()
-    }, config.waterScene.timer);
 
     this.useMouseGravity = false;
     this.mouseGravityTimer = null;
@@ -30,14 +27,8 @@ export default class WaterScene extends Container {
   
 
 
-    this.displacementSprite = new PIXI.Sprite(waterTex);
-    this.displacementSprite.position.set(app.renderer.width / 2, app.renderer.height / 2);
-    this.displacementSprite.anchor.set(0.5);
-    this.displacementFilter = new PIXI.filters.DisplacementFilter(this.displacementSprite);
-    this.addChild(this.displacementSprite);
-    this.filters = [this.displacementFilter];
-    this.displacementFilter.scale.x = 10;
-    this.displacementFilter.scale.y = 10;
+
+
     this.resize = this.resize.bind(this)
 
     this.interactive = true;
@@ -46,9 +37,6 @@ export default class WaterScene extends Container {
         .on('mousemove', this.handleMove)
         .on('touchmove', this.handleMovee);  
   
-    setTimeout(() => {
-      this.transitionIn()
-    }, 2000);
   }
 
   transitionOut(){
@@ -62,6 +50,10 @@ export default class WaterScene extends Container {
   }
 
   transitionIn() {
+    this.waterTimer = setTimeout(() => {
+      this.transitionOut()
+    }, config.waterScene.timer);
+
     this.WaterBorders.createBorders()
 
     engine.timing.timeScale = .07;
@@ -77,7 +69,6 @@ export default class WaterScene extends Container {
     }, 1000);
   }
   resize() {
-    // this.artWarp.resize()
     this.WaterCows.resize()
     this.WaterBorders.createBorders()
   }
@@ -85,20 +76,18 @@ export default class WaterScene extends Container {
   handleMove(e) {
     var x = e.data.global.x;
     var y = e.data.global.y;
-    // this.artWarp.update(x,y)
-    TweenMax.to(this.displacementSprite,10,{x:x});
+
+    //TweenMax.to(this.displacementSprite,10,{x:x});
 
     const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
     const moverY = map(y, 0, app.renderer.height, -gforce, gforce);
     
-    if (this.useMouseGravity == true) {
-      engine.world.gravity.x = moverX;
-      engine.world.gravity.y = moverY;
-    }
+    // if (this.useMouseGravity == true) {
+    //   engine.world.gravity.x = moverX;
+    //   engine.world.gravity.y = moverY;
+    // }
 
-    // const textScale = map(y, 0, app.renderer.height, 0.6, 0.8)
-    // TweenMax.to(this.cover.scale, 3, {x: textScale, y:textScale})
-    // TweenMax.to(this.cover, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
+
   }
 
 }

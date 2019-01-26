@@ -43,22 +43,22 @@ export default class BgIce extends Sprite {
     this.pond.animationSpeed = 0.2
     this.pond.loop = false
     this.addChild(this.pond )
-    this.pond.blendMode = PIXI.BLEND_MODES.MULTIPLY;
+    this.pond.blendMode = PIXI.BLEND_MODES.ADD;
+    //this.pond.alpha = 0
 
 
 
-
-    this.vidGpx = new PIXI.Graphics();
-    this.vidGpx.beginFill(0x000000)
-    this.vidGpx.drawRect(0, 0, app.renderer.width, app.renderer.height)
-    this.vidGpx.endFill()
-
+    this.iceBg = new PIXI.Graphics();
+    this.iceBg.beginFill(0xFFFFFF)
+    this.iceBg.drawRect(0, 0, app.renderer.width, app.renderer.height)
+    this.iceBg.endFill()
+    this.addChild(this.iceBg)
 
        
     this.resize()
     
     // Reveal the scene
-    this.transitionIn()
+    //this.transitionToIce()
     
   }
 
@@ -70,18 +70,23 @@ export default class BgIce extends Sprite {
     this.pond.play();
     this.pond.onComplete = () => {
       setTimeout(() => {
-        TweenMax.to(this.pond.scale, 1, {x: 10, y: 10})
+        TweenMax.to(this.pond.scale, 1, {x: 10, y: 10, onComplete:() => {
+          // this.pond.scale.set(1)
+          // this.pond.alpha = 0
+        }})
       }, 200);
     }
   }
 
-  transitionIn() {
+  transitionToIce() {
+    this.pond.gotoAndStop(0)
 
-  }
-  transitionOut(){
-    TweenMax.to(this, 5, {alpha: 0})
-  }
+    this.iceBg.alpha = 1
 
+    this.resize()
+    //this.pond.alpha = 1    
+    TweenMax.to(this.iceBg, 10, {alpha: 0})
+  }
   resize() {
     const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)
