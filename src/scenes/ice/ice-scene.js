@@ -9,6 +9,7 @@ import IceBorders from './ice-borders'
 import IceCows from './ice-cows'
 import config from './../../setup/config'
 
+
 export default class IceScene extends Container {
   constructor(callback) {
     super()
@@ -16,9 +17,11 @@ export default class IceScene extends Container {
     this.alpha = 0;
 
     this.iceBreakTimer = setTimeout(() => {
-      TweenMax.to(this.vidFrames, 2, {animationSpeed: 0.6, onComplete:() => {
-        this.iceBreak()
-      }})
+      // TweenMax.to(this.vidFrames, 2, {animationSpeed: 0.6, onComplete:() => {
+      //   this.iceBreak()
+      // }})
+      this.iceBreak()
+
     }, config.iceScene.timer);
 
     engine.timing.timeScale = 1;
@@ -31,6 +34,8 @@ export default class IceScene extends Container {
 
     this.iceBorders = new IceBorders();
     this.iceBorders.createBorders();
+
+    this.coverTex = new PIXI.Texture.fromImage(loader.resources.cover.url)
 
     this.pondTex = Texture.fromImage(loader.resources.pond.url)
 
@@ -56,8 +61,8 @@ export default class IceScene extends Container {
     this.pond = new PIXI.extras.AnimatedSprite(pondTextureArray);    
 
     this.pond.anchor.set(0.5)
-    this.pond.animationSpeed = 0.2
-    this.pond.loop = false
+    //this.pond.animationSpeed = 0.2
+    //this.pond.loop = false
     this.addChild(this.pond )
     
     let vidFrameImages = [
@@ -85,16 +90,20 @@ export default class IceScene extends Container {
     this.vidGpx.endFill()
     this.vidBox.addChild(this.vidGpx)
 
-    this.vidFrames = new PIXI.extras.AnimatedSprite(textureArray)
-    this.vidBox.addChild(this.vidFrames);
+    this.cover = new PIXI.Sprite(this.coverTex)
+    this.cover.anchor.set(0.5)
+    this.vidBox.addChild(this.cover)
 
-    this.vidFrames.anchor.set(0.5)
-    this.vidFrames.x = app.renderer.width / 2
-    this.vidFrames.y = app.renderer.height / 2
-    this.vidFrames.animationSpeed = 0.02
-    this.vidFrames.width = app.renderer.width;
-    this.vidFrames.height = app.renderer.height;
-    this.vidFrames.play()
+    // this.vidFrames = new PIXI.extras.AnimatedSprite(textureArray)
+    // this.vidBox.addChild(this.vidFrames);
+
+    // this.vidFrames.anchor.set(0.5)
+    // this.vidFrames.x = app.renderer.width / 2
+    // this.vidFrames.y = app.renderer.height / 2
+    // this.vidFrames.animationSpeed = 0.02
+    // this.vidFrames.width = app.renderer.width;
+    // this.vidFrames.height = app.renderer.height;
+    // this.vidFrames.play()
 
     this.cows = new IceCows();
     this.addChild(this.cows);
@@ -102,7 +111,7 @@ export default class IceScene extends Container {
     this.handleMove = this.handleMove.bind(this)
     this
         .on('mousemove', this.handleMove)
-        .on('touchmove', this.handleMovee)         
+        .on('touchmove', this.handleMove)         
     this.animate()
     this.resize()
     
@@ -135,7 +144,7 @@ export default class IceScene extends Container {
 
         if (this.bottomHits % Math.floor(maxBottomHits / 3) == 0) {
           setTimeout(() => {
-            this.vidFrames.animationSpeed += 0.05
+            //this.vidFrames.animationSpeed += 0.05
             if ( maxBottomHits - this.bottomHits < 3) {
               this.iceBreak();
             } else {
@@ -192,8 +201,15 @@ export default class IceScene extends Container {
   resize() {
     const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTex.baseTexture.width, this.pondTex.baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)
+
     this.pond.x = app.renderer.width / 2
     this.pond.y = app.renderer.height / 2
+
+    const bgSize_cover = backgroundSize(app.renderer.width, app.renderer.height, this.coverTex.baseTexture.width, this.coverTex.baseTexture.height)
+    this.cover.scale.set(bgSize_cover.scale)
+
+    this.cover.x = app.renderer.width / 2
+    this.cover.y = app.renderer.height / 2
   }
 
   handleMove(e) {
@@ -201,13 +217,16 @@ export default class IceScene extends Container {
     var y = e.data.global.y
     const moverX = map(x, 0, app.renderer.width, 10, -10)
     const moverY = map(y, 0, app.renderer.height, 10, -10)
-    const textScale = map(y, 0, app.renderer.height, 0.3, 0.5)
+    const logoScale = map(y, 0, app.renderer.height, 1.1, 1.2)
 
-    TweenMax.to(this.logo, 10, {
-      x: app.renderer.width/2 + (moverX * 1), 
-      y: 170  + (moverY * 1)
+    TweenMax.to(this.cover, 15, {
+      x: app.renderer.width/2 + (moverX * 4), 
+      y: app.renderer.height/2 + (moverY * 2), 
     })
-
+    TweenMax.to(this.cover.scale, 3, {
+      x: logoScale, 
+      y: logoScale, 
+    })
   }
 
   update(){

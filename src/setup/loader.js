@@ -25,7 +25,7 @@ import vid4 from './../../assets/img/vid-frames/vid4.jpg'
 import vid5 from './../../assets/img/vid-frames/vid5.jpg'
 import vid6 from './../../assets/img/vid-frames/vid6.jpg'
 import displacement from './../../assets/img/disp-14.png'
-
+import cover from './../../assets/img/cows-cover.jpg'
 const loader = new PIXI.loaders.Loader(); // you can also create your own if you want
 
 loader
@@ -57,5 +57,6 @@ loader
   .add('waterFg', waterFg)
   .add('text', text)
   .add('displacement', displacement)
+  .add('cover', cover)
   
 export default loader

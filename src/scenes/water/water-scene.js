@@ -10,12 +10,16 @@ import loader from './../../setup/loader'
 import config from './../../setup/config'
 
 const waterTex = new PIXI.Texture.fromImage(loader.resources.displacement.url)
-const gforce = 5
+const gforce = 0.5
 
 export default class WaterScene extends Container {
   constructor(callback) {
     super();
     this.callback = callback;
+
+
+    const coverTex = new PIXI.Texture.fromImage(loader.resources.cover.url)
+
 
     this.waterTimer = setTimeout(() => {
       this.transitionOut()
@@ -24,9 +28,18 @@ export default class WaterScene extends Container {
     this.useMouseGravity = false;
     this.mouseGravityTimer = null;
     this.WaterBorders = new WaterBorders()
-    this.artWarp = new ArtWarp()
-    this.artWarp.scale.set(1)
-    this.addChild(this.artWarp)
+    
+    
+    // this.artWarp = new ArtWarp()
+    // this.artWarp.scale.set(1)
+    // this.addChild(this.artWarp)
+
+    this.cover = new PIXI.Sprite(coverTex)
+    this.cover.position.set(app.renderer.width / 2, app.renderer.height / 2);
+    this.cover.anchor.set(0.5);
+    this.addChild(this.cover);
+
+
     this.displacementSprite = new PIXI.Sprite(waterTex);
     this.displacementSprite.position.set(app.renderer.width / 2, app.renderer.height / 2);
     this.displacementSprite.anchor.set(0.5);
@@ -36,15 +49,19 @@ export default class WaterScene extends Container {
     this.displacementFilter.scale.x = 10;
     this.displacementFilter.scale.y = 10;
     this.resize = this.resize.bind(this)
-    const logoTex = new PIXI.Texture.fromImage(loader.resources.text.url)
-    this.logo = new PIXI.Sprite(logoTex)
-    this.addChild(this.logo)
-    this.logo.blendMode = PIXI.BLEND_MODES.SCREEN
-    this.logo.scale.set(2)
-    this.logo.anchor.set(0.5)
-    this.logo.alpha = 0;
-    this.logo.x = app.renderer.width / 2
-    this.logo.y = app.renderer.height / 2
+
+
+    // const logoTex = new PIXI.Texture.fromImage(loader.resources.text.url)
+    // this.logo = new PIXI.Sprite(logoTex)
+    // this.addChild(this.logo)
+    // this.logo.blendMode = PIXI.BLEND_MODES.SCREEN
+    // this.logo.scale.set(2)
+    // this.logo.anchor.set(0.5)
+    // this.logo.alpha = 0;
+    // this.logo.x = app.renderer.width / 2
+    // this.logo.y = app.renderer.height / 2
+
+
     this.interactive = true;
     this.handleMove = this.handleMove.bind(this)
     this
@@ -69,10 +86,13 @@ export default class WaterScene extends Container {
 
   transitionIn() {
     this.WaterBorders.createBorders()
-    engine.timing.timeScale = .1;
+
+    engine.timing.timeScale = .07;
+    engine.world.gravity.x = 0;
     engine.world.gravity.y = 5;
-    TweenMax.to(this.logo.scale, 3, {x: 0.8, y: 0.8})
-    TweenMax.to(this.logo, 5, {alpha: 1})
+
+    TweenMax.to(this.cover.scale, 3, {x: 0.8, y: 0.8})
+    TweenMax.to(this.cover, 5, {alpha: 1})
     this.WaterCows = new WaterCows()
     this.addChild(this.WaterCows)
     this.WaterCows.animate();
@@ -82,7 +102,7 @@ export default class WaterScene extends Container {
     }, 1000);
   }
   resize() {
-    this.artWarp.resize()
+    // this.artWarp.resize()
     this.WaterCows.resize()
     this.WaterBorders.createBorders()
   }
@@ -90,7 +110,7 @@ export default class WaterScene extends Container {
   handleMove(e) {
     var x = e.data.global.x;
     var y = e.data.global.y;
-    this.artWarp.update(x,y)
+    // this.artWarp.update(x,y)
     TweenMax.to(this.displacementSprite,10,{x:x});
 
     const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
@@ -102,8 +122,8 @@ export default class WaterScene extends Container {
     }
 
     const textScale = map(y, 0, app.renderer.height, 0.6, 0.8)
-    TweenMax.to(this.logo.scale, 3, {x: textScale, y:textScale})
-    TweenMax.to(this.logo, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
+    TweenMax.to(this.cover.scale, 3, {x: textScale, y:textScale})
+    TweenMax.to(this.cover, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
   }
 
 }

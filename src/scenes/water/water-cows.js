@@ -25,14 +25,14 @@ function createCows(){
 
   let cowIndex = 0
   let twistCow = false;
-  Matter.Composites.stack(0,0, 6, 4, 0, 0, function(x, y, column, row) {
+  Matter.Composites.stack(0,0, 2, 2, 0, 0, function(x, y, column, row) {
     cowIndex = (cowIndex + 1) % cowTextures.length
     const cow = new PhysicsSprite('swimmer', engine, 0x001)
     const width = cowTextures[cowIndex].orig.width / 2
     const height = cowTextures[cowIndex].orig.height / 2
     cow.init(
       Matter.Common.random(0,app.renderer.width), 
-      Matter.Common.random(0,app.renderer.height) - app.renderer.height, 
+      Matter.Common.random(-500, 0), 
       width, 
       height, 
       cowTextures[cowIndex], 

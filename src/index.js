@@ -16,7 +16,7 @@ app.stage.addChild(waterWrap)
 app.stage.addChild(iceWrap)
 
 loader.load((loader, resources) => {
-    launchIce()
+  launchIce()
   //launchWater()
 });
 

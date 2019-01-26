@@ -29,12 +29,13 @@ class PhysicsSprite {
 
     if (this.type === 'circle') {
       this._body = Matter.Bodies.circle(this.x, this.y, this.width / 3, {
-        frictionAir: 0,
+        frictionAir: 0.01,
         friction: 0,
         frictionStatic: 0,
-        density: Matter.Common.random(.2, .6), 
-        restitution: 0.5}
-      )
+        density: Matter.Common.random(.2, .8), 
+        //density: 1, 
+        restitution: 0.5
+      })
     } else {
       this._body = Matter.Bodies.rectangle(this.x, this.y, this.width / 1.5, this.height / 1.5, {
         frictionAir: 0.03,
