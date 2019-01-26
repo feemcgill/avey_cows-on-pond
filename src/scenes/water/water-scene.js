@@ -18,7 +18,6 @@ export default class WaterScene extends Container {
     this.callback = callback;
 
 
-    const coverTex = new PIXI.Texture.fromImage(loader.resources.cover.url)
 
 
     this.waterTimer = setTimeout(() => {
@@ -28,16 +27,7 @@ export default class WaterScene extends Container {
     this.useMouseGravity = false;
     this.mouseGravityTimer = null;
     this.WaterBorders = new WaterBorders()
-    
-    
-    // this.artWarp = new ArtWarp()
-    // this.artWarp.scale.set(1)
-    // this.addChild(this.artWarp)
-
-    this.cover = new PIXI.Sprite(coverTex)
-    this.cover.position.set(app.renderer.width / 2, app.renderer.height / 2);
-    this.cover.anchor.set(0.5);
-    this.addChild(this.cover);
+  
 
 
     this.displacementSprite = new PIXI.Sprite(waterTex);
@@ -49,18 +39,6 @@ export default class WaterScene extends Container {
     this.displacementFilter.scale.x = 10;
     this.displacementFilter.scale.y = 10;
     this.resize = this.resize.bind(this)
-
-
-    // const logoTex = new PIXI.Texture.fromImage(loader.resources.text.url)
-    // this.logo = new PIXI.Sprite(logoTex)
-    // this.addChild(this.logo)
-    // this.logo.blendMode = PIXI.BLEND_MODES.SCREEN
-    // this.logo.scale.set(2)
-    // this.logo.anchor.set(0.5)
-    // this.logo.alpha = 0;
-    // this.logo.x = app.renderer.width / 2
-    // this.logo.y = app.renderer.height / 2
-
 
     this.interactive = true;
     this.handleMove = this.handleMove.bind(this)
@@ -78,7 +56,6 @@ export default class WaterScene extends Container {
     this.WaterBorders.removeBorders()
     clearTimeout(this.mouseGravityTimer)
     clearTimeout(this.waterTimer)
-    TweenMax.to(this.logo, 0.2, {alpha: 0})
     TweenMax.to(this, 2, {alpha:0, onComplete: () => {
       this.callback();
     }})
@@ -91,8 +68,6 @@ export default class WaterScene extends Container {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 5;
 
-    TweenMax.to(this.cover.scale, 3, {x: 0.8, y: 0.8})
-    TweenMax.to(this.cover, 5, {alpha: 1})
     this.WaterCows = new WaterCows()
     this.addChild(this.WaterCows)
     this.WaterCows.animate();
@@ -121,9 +96,9 @@ export default class WaterScene extends Container {
       engine.world.gravity.y = moverY;
     }
 
-    const textScale = map(y, 0, app.renderer.height, 0.6, 0.8)
-    TweenMax.to(this.cover.scale, 3, {x: textScale, y:textScale})
-    TweenMax.to(this.cover, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
+    // const textScale = map(y, 0, app.renderer.height, 0.6, 0.8)
+    // TweenMax.to(this.cover.scale, 3, {x: textScale, y:textScale})
+    // TweenMax.to(this.cover, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
   }
 
 }

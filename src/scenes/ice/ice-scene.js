@@ -11,17 +11,13 @@ import config from './../../setup/config'
 
 
 export default class IceScene extends Container {
-  constructor(callback) {
+  constructor(endCallback, breakCallback, crackCallback) {
     super()
 
     this.alpha = 0;
 
     this.iceBreakTimer = setTimeout(() => {
-      // TweenMax.to(this.vidFrames, 2, {animationSpeed: 0.6, onComplete:() => {
-      //   this.iceBreak()
-      // }})
       this.iceBreak()
-
     }, config.iceScene.timer);
 
     engine.timing.timeScale = 1;
@@ -30,7 +26,9 @@ export default class IceScene extends Container {
         
     this.resize = this.resize.bind(this)
     this.animate = this.animate.bind(this)
-    this.callback = callback;
+    this.endCallback = endCallback;
+    this.breakCallback = breakCallback;
+    this.crackCallback = crackCallback;
 
     this.iceBorders = new IceBorders();
     this.iceBorders.createBorders();
@@ -61,9 +59,9 @@ export default class IceScene extends Container {
     this.pond = new PIXI.extras.AnimatedSprite(pondTextureArray);    
 
     this.pond.anchor.set(0.5)
-    //this.pond.animationSpeed = 0.2
-    //this.pond.loop = false
-    this.addChild(this.pond )
+    this.pond.animationSpeed = 0.2
+    this.pond.loop = false
+    //this.addChild(this.pond )
     
     let vidFrameImages = [
       loader.resources.vid1.url,
@@ -88,22 +86,11 @@ export default class IceScene extends Container {
     this.vidGpx.beginFill(0x000000)
     this.vidGpx.drawRect(0, 0, app.renderer.width, app.renderer.height)
     this.vidGpx.endFill()
-    this.vidBox.addChild(this.vidGpx)
+    //this.vidBox.addChild(this.vidGpx)
 
     this.cover = new PIXI.Sprite(this.coverTex)
     this.cover.anchor.set(0.5)
-    this.vidBox.addChild(this.cover)
-
-    // this.vidFrames = new PIXI.extras.AnimatedSprite(textureArray)
-    // this.vidBox.addChild(this.vidFrames);
-
-    // this.vidFrames.anchor.set(0.5)
-    // this.vidFrames.x = app.renderer.width / 2
-    // this.vidFrames.y = app.renderer.height / 2
-    // this.vidFrames.animationSpeed = 0.02
-    // this.vidFrames.width = app.renderer.width;
-    // this.vidFrames.height = app.renderer.height;
-    // this.vidFrames.play()
+    //this.vidBox.addChild(this.cover)
 
     this.cows = new IceCows();
     this.addChild(this.cows);
@@ -115,16 +102,6 @@ export default class IceScene extends Container {
     this.animate()
     this.resize()
     
-    this.logo = new PIXI.Sprite.fromImage(loader.resources.at_name.url)
-    this.logo.alpha = 0
-    this.logo.anchor.set(0.5)
-    this.logo.scale.set(0.5)
-    this.logo.x = app.renderer.width / 2
-    this.logo.y = 170
-    this.addChild(this.logo)
-    this.logo.interactive = true
-    this.logo.buttonmode = true
-    this.logo.cursor = 'pointer'
     // Reveal the scene
     this.transitionIn()
     
@@ -134,13 +111,7 @@ export default class IceScene extends Container {
 
       const pairs = event.pairs;
       if (pairs[0].bodyB.label == 'bottomhole' || pairs[0].bodyA.label == 'bottomhole') {
-        console.log("   ")
-        console.log("   ")
-        console.log("   ")
 
-        console.log('hit', this.bottomHits, this.bottomHits % Math.floor(maxBottomHits / 3))
-        console.log(Math.floor(this.bottomHits % maxBottomHits/3), maxBottomHits - this.bottomHits)
-        console.log(this.bottomHits, Math.floor(this.bottomHits % maxBottomHits/3) < maxBottomHits - this.bottomHits)
 
         if (this.bottomHits % Math.floor(maxBottomHits / 3) == 0) {
           setTimeout(() => {
@@ -149,6 +120,7 @@ export default class IceScene extends Container {
               this.iceBreak();
             } else {
               this.pond.gotoAndStop(this.pond.currentFrame + 1)
+              this.crackCallback();
             }
           }, 400);
         }
@@ -165,36 +137,30 @@ export default class IceScene extends Container {
       this.iceBorders.dropBottom();
     }, 300);        
     
-    this.pond.play();
-    this.pond.onComplete = () => {
-      setTimeout(() => {
-        TweenMax.to(this.pond.scale, 1, {x: 10, y: 10})
-        TweenMax.to(this.vidFrames, 1, {alpha: 0})
-        TweenMax.to(this.logo.scale, 2, {x: 0, y:0})       
-      }, 200);
- 
 
-      this.cows.end()
+    this.breakCallback()
 
-      setTimeout(() => {
-        this.transitionOut()
-      }, 2000);
-    }
+    this.cows.end()
+
     setTimeout(() => {
-      this.iceBorders.dropBottom();
-    }, 100);    
+      this.transitionOut()
+    }, 2000);
+  
+    // setTimeout(() => {
+    //   this.iceBorders.dropBottom();
+    // }, 100);    
   }
 
   transitionIn() {
-    TweenMax.to(this.logo, 5, {alpha: 0.7, delay: 2})
+    //TweenMax.to(this.logo, 5, {alpha: 0.7, delay: 2})
     TweenMax.to(this, 6, {alpha: 1, onComplete:() => {
       this.cows.sendCows();
     }})
   }
   transitionOut(){
-    TweenMax.to(this.vidFrames, 0.5, {alpha: 0})
+    //TweenMax.to(this.vidFrames, 0.5, {alpha: 0})
     TweenMax.to(this, 5, {alpha: 0})
-    this.callback();
+    this.endCallback();
     this.iceBorders.removeBorders();
   }
 
@@ -217,15 +183,15 @@ export default class IceScene extends Container {
     var y = e.data.global.y
     const moverX = map(x, 0, app.renderer.width, 10, -10)
     const moverY = map(y, 0, app.renderer.height, 10, -10)
-    const logoScale = map(y, 0, app.renderer.height, 1.1, 1.2)
+    const bgScale = map(y, 0, app.renderer.height, 1.1, 1.2)
 
     TweenMax.to(this.cover, 15, {
       x: app.renderer.width/2 + (moverX * 4), 
       y: app.renderer.height/2 + (moverY * 2), 
     })
     TweenMax.to(this.cover.scale, 3, {
-      x: logoScale, 
-      y: logoScale, 
+      x: bgScale, 
+      y: bgScale, 
     })
   }
 
