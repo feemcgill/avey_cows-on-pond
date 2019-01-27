@@ -86,7 +86,7 @@ export default class IceScene extends Container {
     setTimeout(() => {
       this.transitionOut()
       this.bottomHits = 0
-    }, 1500);  
+    }, 500);  
   }
 
 
