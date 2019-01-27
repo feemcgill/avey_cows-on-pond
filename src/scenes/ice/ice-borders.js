@@ -32,7 +32,7 @@ export default class IceBorders {
     
     this.ramp_left =  Matter.Bodies.rectangle(
       -(iceDrop_width) / 3,
-      app.renderer.height - offset * 1.5, 
+      app.renderer.height - offset * 1.7, 
       app.renderer.width, 
       rampThickness, 
       { isStatic: true }
@@ -40,7 +40,7 @@ export default class IceBorders {
   
     this.ramp_right =  Matter.Bodies.rectangle(
       app.renderer.width + (iceDrop_width) / 3,
-      app.renderer.height - offset * 1.5, 
+      app.renderer.height - offset * 1.7, 
       app.renderer.width, 
       rampThickness, 
       { isStatic: true }

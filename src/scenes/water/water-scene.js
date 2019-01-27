@@ -3,40 +3,25 @@ import {TweenMax} from "gsap/TweenMax";
 import app from './../../setup/app';
 import engine from './../../setup/engine';
 import {map} from '../../helpers'
-import ArtWarp from './art-warp'
 import WaterCows from './water-cows'
 import WaterBorders from './water-borders'
-import loader from './../../setup/loader'
 import config from './../../setup/config'
 
-const gforce = 0.5
+const gforce = 10.5
 
 export default class WaterScene extends Container {
   constructor(callback) {
     super();
     this.callback = callback;
 
-
-
     this.waterTimer = null
-
 
     this.useMouseGravity = false;
     this.mouseGravityTimer = null;
     this.WaterBorders = new WaterBorders()
-  
-
-
-
 
     this.resize = this.resize.bind(this)
-
-    this.interactive = true;
     this.handleMove = this.handleMove.bind(this)
-    this
-        .on('mousemove', this.handleMove)
-        .on('touchmove', this.handleMovee);  
-  
   }
 
   transitionOut(){
@@ -44,19 +29,29 @@ export default class WaterScene extends Container {
     this.WaterBorders.removeBorders()
     clearTimeout(this.mouseGravityTimer)
     clearTimeout(this.waterTimer)
-    TweenMax.to(this, 2, {alpha:0, onComplete: () => {
+    const cows = this.WaterCows.cows
+    for (let i = 0; i < cows.length; i++) {
+      const s = cows[i];
+      TweenMax.to(s._sprite, .3, {alpha: 0, delay: 0.2 * i, onComplete:() => {
+        s.destroy();
+      }})
+    }
+    setTimeout(() => {
       this.callback();
-    }})
+      this.removeChildren()
+    }, 1000);
+
   }
 
   transitionIn() {
+    this.alpha = 1
     this.waterTimer = setTimeout(() => {
       this.transitionOut()
     }, config.waterScene.timer);
 
     this.WaterBorders.createBorders()
 
-    engine.timing.timeScale = .07;
+    engine.timing.timeScale = .1;
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 5;
 
@@ -73,21 +68,15 @@ export default class WaterScene extends Container {
     this.WaterBorders.createBorders()
   }
 
-  handleMove(e) {
-    var x = e.data.global.x;
-    var y = e.data.global.y;
-
-    //TweenMax.to(this.displacementSprite,10,{x:x});
+  handleMove(x, y) {
 
     const moverX = map(x, 0, app.renderer.width, -gforce, gforce);
     const moverY = map(y, 0, app.renderer.height, -gforce, gforce);
     
-    // if (this.useMouseGravity == true) {
-    //   engine.world.gravity.x = moverX;
-    //   engine.world.gravity.y = moverY;
-    // }
-
-
+    if (this.useMouseGravity == true) {
+      engine.world.gravity.x = moverX;
+      engine.world.gravity.y = moverY;
+    }
   }
 
 }

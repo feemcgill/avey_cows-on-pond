@@ -12,7 +12,7 @@ export default class BgCover extends Container {
   constructor() {
     super()
 
-
+    this.canMove = false;
         
     this.resize = this.resize.bind(this)
 
@@ -33,17 +33,18 @@ export default class BgCover extends Container {
   
   }
 
-  transitionIn() {
-  }
-  transitionOut(){
-  }
-
   transitionToWater(){
-    TweenMax.to(this.cover.scale, 10, {x: 0.6, y:0.6 })
+    this.canMove = false
+    TweenMax.killTweensOf(this.cover.scale)
+    TweenMax.to(this.cover.scale, 3, {x: 0.6, y:0.6, onComplete:() => {
+      this.canMove = true
+    }
+    })
   }
 
   transitionToIce() {
-    TweenMax.to(this.cover.scale, 10, {x: 1.2, y:1.2 })
+    this.canMove = true
+    TweenMax.to(this.cover.scale, 0.2, {x: 1.2, y:1.2 })
   }
 
   resize() {
@@ -55,33 +56,27 @@ export default class BgCover extends Container {
     this.cover.y = app.renderer.height / 2
   }
 
-  handleMove(e) {
-    
-    var x = e.data.global.x
-    var y = e.data.global.y
+  handleMove(x,y) {
 
     const moverX = map(x, 0, app.renderer.width, 10, -10)
     const moverY = map(y, 0, app.renderer.height, 10, -10)
     let bgScale = map(y, 0, app.renderer.height, 1.1, 1.2)
 
     if (state.currentScene == 'water') {
-      bgScale = map(y, 0, app.renderer.height, 0.6, 0.8)
+      bgScale = map(y, 0, app.renderer.height, 0.6, 0.7)
     } else {
-      bgScale = map(y, 0, app.renderer.height, 1.1, 1.2)
+      bgScale = map(y, 0, app.renderer.height, 1.2, 1.1)
     }
-
-    TweenMax.to(this.cover, 15, {
-      x: app.renderer.width/2 + (moverX * 4), 
-      y: app.renderer.height/2 + (moverY * 2), 
-    })
-    TweenMax.to(this.cover.scale, 10, {
-      x: bgScale, 
-      y: bgScale, 
-    })
-
-
-    // TweenMax.to(this.cover.scale, 3, {x: textScale, y:textScale})
-    // TweenMax.to(this.cover, 10, {x: (app.renderer.width / 2 - (moverX *30)) })
+    if (this.canMove) {
+      TweenMax.to(this.cover, 15, {
+        x: app.renderer.width/2 + (moverX * 4), 
+        y: app.renderer.height/2 + (moverY * 2), 
+      })
+      TweenMax.to(this.cover.scale, 10, {
+        x: bgScale, 
+        y: bgScale, 
+      })
+    }
   }
 
  

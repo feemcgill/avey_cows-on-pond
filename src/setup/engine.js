@@ -24,10 +24,7 @@ let matter_renderer = {
 matter_renderer = {};
 
 const engine = Matter.Engine.create(matter_renderer)
-//engine.timing.timeScale = 1;
-// engine.world.gravity.x = 0;
-//engine.world.gravity.y = 2;
-console.log(engine.world, engine)
+
 const mouseConstraint = Matter.MouseConstraint.create(engine);
 Matter.World.add(engine.world, mouseConstraint);
 

@@ -15,7 +15,7 @@ export default class IceScene extends Container {
 
     super()
 
-    //this.alpha = 0;
+    this.alpha = 1;
     this.iceBreakTimer = null
 
         
@@ -26,18 +26,15 @@ export default class IceScene extends Container {
     this.crackCallback = crackCallback;
 
     this.iceBorders = new IceBorders();
-    this.cows = new IceCows();
-    this.addChild(this.cows);
+
 
     
-    this.animate()
     this.resize()
     
     
     const maxBottomHits = config.iceScene.bottomHits
     this.bottomHits = 0
     Matter.Events.on(engine, 'collisionStart', (event) => {
-      console.log(this.bottomHits)
       const pairs = event.pairs;
       if (pairs[0].bodyB.label == 'bottomhole' || pairs[0].bodyA.label == 'bottomhole') {
 
@@ -50,34 +47,22 @@ export default class IceScene extends Container {
             } else {
               this.crackCallback();
             }
-          }, 400);
+          }, 40);
         }
 
         this.bottomHits ++
       }
     });    
   }
-
-  iceBreak(){
-    clearTimeout(this.iceBreakTimer)
-
-    setTimeout(() => {
-      this.iceBorders.dropBottom();
-    }, 300);        
-    
-    this.breakCallback()
-
-
-    setTimeout(() => {
-      this.transitionOut()
-      this.bottomHits = 0
-    }, 500);  
-  }
-
   transitionIn() {
-    this.alpha = 1
+    //this.alpha = 1
     this.iceBorders.createBorders();
+
+    this.cows = new IceCows();
+    this.addChild(this.cows);
+    
     this.cows.sendCows();
+    this.animate()
 
     this.iceBreakTimer = setTimeout(() => {
       this.iceBreak()
@@ -87,12 +72,32 @@ export default class IceScene extends Container {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 5;    
   }
+  
+  iceBreak(){
+    clearTimeout(this.iceBreakTimer)
+
+    setTimeout(() => {
+    }, 300);        
+    this.iceBorders.dropBottom();
+
+    this.breakCallback()
+
+
+    setTimeout(() => {
+      this.transitionOut()
+      this.bottomHits = 0
+    }, 1500);  
+  }
+
+
 
   transitionOut(){
-    TweenMax.to(this, 5, {alpha: 0})
-    this.endCallback();
     this.iceBorders.removeBorders();
-    this.cows.end()
+    setTimeout(() => {
+      this.endCallback();
+      this.removeChildren()
+      this.cows.end()
+    }, 2000);
   }
 
   resize() {

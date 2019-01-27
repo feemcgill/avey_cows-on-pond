@@ -25,10 +25,10 @@ export default class WaterBorders {
   this.border_bodies = [
     Matter.Bodies.rectangle(
       app.renderer.width / 2,
-      -app.renderer.height * 2,
+      -app.renderer.height / 2,
       app.renderer.width,
       100,
-      //{ isStatic: true }
+      { isStatic: true }
     ), // top
 
     Matter.Bodies.rectangle(
@@ -56,9 +56,9 @@ export default class WaterBorders {
     ), // right
   ]
   Matter.World.add(engine.world, this.border_bodies);
-  setTimeout(() => {
-    this.squeeze()
-  }, 3000); 
+  // setTimeout(() => {
+  //   this.squeeze()
+  // }, 3000); 
  }
  removeBorders(){
   Matter.Composite.remove(engine.world, this.border_bodies);

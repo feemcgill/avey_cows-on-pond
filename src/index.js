@@ -3,10 +3,11 @@ import Matter from 'matter-js';
 import engine from './setup/engine'
 import IceScene from './scenes/ice/ice-scene'
 import WaterScene from './scenes/water/water-scene'
-import {debounce, getWindowSize} from './helpers'
+import {debounce, getWindowSize, map} from './helpers'
 import loader from './setup/loader'
 import BgIce from './scenes/background/bg-ice'
 import BgCover from './scenes/background/bg-cover'
+import TweenMax from 'gsap/TweenMaxBase';
 
 document.body.appendChild(app.view);
 
@@ -35,7 +36,6 @@ app.stage.addChild(iceWrap)
 loader.load((loader, resources) => {
   bgCover = new BgCover()
   bgIce = new BgIce()
-  //bgIce.alpha = 0.3
   bgWrap.addChild(bgCover)
   bgWrap.addChild(bgIce)
 
@@ -49,15 +49,19 @@ loader.load((loader, resources) => {
   displacementSprite = new PIXI.Sprite(waterTex);
   displacementSprite.position.set(app.renderer.width / 2, app.renderer.height / 2);
   displacementSprite.anchor.set(0.5);
+  displacementSprite.scale.set(0);
   displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
   displacementFilter.scale.x = 10;
   displacementFilter.scale.y = 10;
-  displacementSprite.alpha = 0;
+  app.stage.addChild(displacementSprite)
 
+  app.stage.interactive = true;
+  app.stage
+      .on('mousemove', handleMove)
+      .on('touchmove', handleMove);  
 
 
   launchIce()
-  //launchWater()
 
 
 
@@ -65,9 +69,11 @@ loader.load((loader, resources) => {
 
 function launchWater() {
   state.currentScene = 'water'
-  bgCover.transitionToWater()
-  waterScene.transitionIn()
+  setTimeout(() => {
+    waterScene.transitionIn()
+  }, 1000);
   app.stage.filters = [displacementFilter];
+  TweenMax.to(displacementSprite.scale, 5, {x:1, y:1})
 
 }
 
@@ -77,7 +83,11 @@ function launchIce(){
   bgIce.transitionToIce()
 
   iceScene.transitionIn()
-  app.stage.filters = []
+  TweenMax.to(displacementSprite.scale, .1, {x:0, y:0, onComplete:() => {
+    app.stage.filters = []
+
+  }})
+
 }
 
 function crackIce() {
@@ -85,10 +95,29 @@ function crackIce() {
 }
 
 function breakIce() {
+  bgCover.transitionToWater()
   bgIce.breakPond()
 }
 
+/** MOUSE MOVE **/
+/** MOUSE MOVE **/
+/** MOUSE MOVE **/
+function handleMove(e) {
+  var x = e.data.global.x;
+  var y = e.data.global.y;
 
+  const displaceMover = map(x, 0, app.renderer.width, -300, 300);
+  bgCover.handleMove(x,y)
+
+  if (state.currentScene == 'water') {
+    TweenMax.to(displacementSprite,10,{x:x});
+    waterScene.handleMove(x,y)
+  }
+}
+
+/** RESIZE **/
+/** RESIZE **/
+/** RESIZE **/
 window.addEventListener("resize",function(e){
   const size = getWindowSize();
   const w = size.width;

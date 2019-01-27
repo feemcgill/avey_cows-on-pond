@@ -65,7 +65,7 @@ export default class Cows extends Container {
     Matter.World.add(engine.world, cow.body)
 
     cow.drown = function(){
-      TweenMax.to(cow.sprite, .13, {alpha: 0});
+      //TweenMax.to(cow.sprite, .13, {alpha: 0});
       setTimeout(() => {
         cow.destroy()
       }, 500);
@@ -104,7 +104,7 @@ export default class Cows extends Container {
     for (let i = 0; i < this.cows.length; i++) {
       const e = this.cows[i];
       e.update()
-      if (e.body.position.y > app.renderer.height / 1.15) {
+      if (e.body.position.y > app.renderer.height / 1.05) {
          e.drown();
       }
     }

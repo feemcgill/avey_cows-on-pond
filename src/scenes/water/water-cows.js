@@ -80,10 +80,10 @@ export default class CowSwim extends Sprite {
     }    
   }
   transitionOut(){
-    for (let i = 0; i < this.cows.length; i++) {
-      const s = this.cows[i];
-      s.destroy();
-    }   
+    // for (let i = 0; i < this.cows.length; i++) {
+    //   const s = this.cows[i];
+    //   s.destroy();
+    // }   
   }
 
   resize() {
