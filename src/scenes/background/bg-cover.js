@@ -18,16 +18,21 @@ export default class BgCover extends Container {
 
 
 
+    this.waterTex = new PIXI.Texture.fromImage(loader.resources.waterBg.url)
     this.coverTex = new PIXI.Texture.fromImage(loader.resources.cover.url)
+
+
+
+    this.water = new PIXI.Sprite(this.waterTex)
+    this.water.anchor.set(0.5)
+    this.addChild(this.water)
 
 
     this.cover = new PIXI.Sprite(this.coverTex)
     this.cover.anchor.set(0.5)
     this.addChild(this.cover)
-    this.interactive = true
-    this
-        .on('mousemove', this.handleMove)
-        .on('touchmove', this.handleMove)         
+
+ 
     this.resize()
     
   
@@ -49,6 +54,13 @@ export default class BgCover extends Container {
 
   resize() {
 
+    const bgSize_water = backgroundSize(app.renderer.width, app.renderer.height, this.waterTex.baseTexture.width, this.waterTex.baseTexture.height)
+    this.water.scale.set(bgSize_water.scale)
+
+    this.water.x = app.renderer.width / 2
+    this.water.y = app.renderer.height / 2
+
+
     const bgSize_cover = backgroundSize(app.renderer.width, app.renderer.height, this.coverTex.baseTexture.width, this.coverTex.baseTexture.height)
     this.cover.scale.set(bgSize_cover.scale)
 
@@ -63,6 +75,12 @@ export default class BgCover extends Container {
     let bgScale = map(y, 0, app.renderer.height, 1.1, 1.2)
 
     if (state.currentScene == 'water') {
+
+      TweenMax.to(this.water, 15, {
+        x: app.renderer.width/2 + (-moverX * 4), 
+        y: app.renderer.height/2 + (-moverY * 2), 
+      })
+
       bgScale = map(y, 0, app.renderer.height, 0.6, 0.7)
     } else {
       bgScale = map(y, 0, app.renderer.height, 1.2, 1.1)
