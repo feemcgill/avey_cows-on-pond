@@ -7,7 +7,7 @@ import WaterCows from './water-cows'
 import WaterBorders from './water-borders'
 import config from './../../setup/config'
 
-const gforce = 10.5
+const gforce = 0.5
 
 export default class WaterScene extends Container {
   constructor(callback) {
@@ -51,7 +51,7 @@ export default class WaterScene extends Container {
 
     this.WaterBorders.createBorders()
 
-    engine.timing.timeScale = .1;
+    engine.timing.timeScale = 0.1;
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 5;
 
