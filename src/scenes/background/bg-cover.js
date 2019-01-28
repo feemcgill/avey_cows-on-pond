@@ -86,7 +86,7 @@ export default class BgCover extends Container {
       bgScale = map(y, 0, app.renderer.height, 1.2, 1.1)
     }
     if (this.canMove) {
-      TweenMax.to(this.cover, 15, {
+      TweenMax.to(this.cover, 5, {
         x: app.renderer.width/2 + (moverX * 4), 
         y: app.renderer.height/2 + (moverY * 2), 
       })

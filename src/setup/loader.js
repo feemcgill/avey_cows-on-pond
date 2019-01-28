@@ -49,7 +49,6 @@ loader
   .add('vid4', vid4)
   .add('vid5', vid5)
   .add('vid6', vid6)
-  .add('swimmer', swimmer_1)
   .add('swimmer_1', swimmer_1)
   .add('swimmer_2', swimmer_2)
   .add('swimmer_3', swimmer_3)

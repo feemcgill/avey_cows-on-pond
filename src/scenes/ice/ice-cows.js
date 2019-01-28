@@ -43,7 +43,6 @@ export default class Cows extends Container {
     this.end = this.end.bind(this)
 
     this.sendCows = this.sendCows.bind(this)
-    this.cowTex = new PIXI.Texture.fromImage(loader.resources.swimmer.url)
     this.cows = []
   }
   
@@ -55,7 +54,7 @@ export default class Cows extends Container {
     }
     this.cowIndex = (this.cowIndex + 1) % this.cowTextures.length
 
-    const cow = new PhysicsSprite('swimmer-' + this.cows.length, engine, 0x001)
+    const cow = new PhysicsSprite('walker-' + this.cows.length, engine, 0x001)
 
     const width = this.cowTextures[this.cowIndex].orig.width * 0.33
     const height = this.cowTextures[this.cowIndex].orig.height * 0.33
@@ -65,7 +64,6 @@ export default class Cows extends Container {
     Matter.World.add(engine.world, cow.body)
 
     cow.drown = function(){
-      //TweenMax.to(cow.sprite, .13, {alpha: 0});
       setTimeout(() => {
         cow.destroy()
       }, 500);
