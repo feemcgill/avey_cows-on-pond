@@ -81,8 +81,9 @@ export default class BgIce extends Sprite {
 
     this.resize()
     TweenMax.to(this, 0.5, {alpha: 1})
-    TweenMax.to(this.iceBg, 3, {alpha: 0})
+    TweenMax.to(this.iceBg, 3, {alpha: 0, delay: 0.6})
   }
+
   resize() {
     const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)

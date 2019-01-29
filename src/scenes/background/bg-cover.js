@@ -56,7 +56,7 @@ export default class BgCover extends Container {
 
   transitionToIce() {
     this.canMove = true
-    TweenMax.to(this.cover.scale, 0.1, {x: this.cover_size_fill.scale, y:this.cover_size_fill.scale, delay: 1 })
+    TweenMax.to(this.cover.scale, 0.1, {x: this.cover_size_fill.scale, y:this.cover_size_fill.scale, delay: 0.5 })
   }
 
   resize() {
