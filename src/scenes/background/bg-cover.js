@@ -55,7 +55,7 @@ export default class BgCover extends Container {
   resize() {
 
     const bgSize_water = backgroundSize(app.renderer.width, app.renderer.height, this.waterTex.baseTexture.width, this.waterTex.baseTexture.height)
-    this.water.scale.set(bgSize_water.scale)
+    this.water.scale.set(bgSize_water.scale * 1.1)
 
     this.water.x = app.renderer.width / 2
     this.water.y = app.renderer.height / 2
@@ -66,6 +66,15 @@ export default class BgCover extends Container {
 
     this.cover.x = app.renderer.width / 2
     this.cover.y = app.renderer.height / 2
+
+    if (state.currentScene == 'water') {
+
+      TweenMax.to(this.water, 0.5, {
+        x: app.renderer.width/2, 
+        y: app.renderer.height/2, 
+      })
+
+    } 
   }
 
   handleMove(x,y) {

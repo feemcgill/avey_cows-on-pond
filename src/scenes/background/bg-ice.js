@@ -67,6 +67,7 @@ export default class BgIce extends Sprite {
     this.pond.onComplete = () => {
       setTimeout(() => {
         TweenMax.to(this.pond.scale, 1, {x: 10, y: 10, onComplete:() => {
+          this.pond.alpha = 0
         }})
       }, 200);
     }
@@ -74,14 +75,13 @@ export default class BgIce extends Sprite {
 
   transitionToIce() {
     this.pond.gotoAndStop(0)
-
+    this.pond.alpha = 1
     this.iceBg.alpha = 1
 
     this.resize()
     TweenMax.to(this.iceBg, 3, {alpha: 0})
   }
   resize() {
-    console.log('ICE RESIZE')
     const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)
 

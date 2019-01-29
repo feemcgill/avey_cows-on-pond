@@ -108,6 +108,7 @@
       article {
         position: fixed;
         background-image: url('./../assets/img/water-bg.jpg');
+        background-size: cover;
         top: 20px;
         bottom: 20px;
         left: 20px;
@@ -117,7 +118,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all .2s ease-out;
+        transition: all 1s ease-out;
         transform: scale(0);
         pointer-events: none;
       }
@@ -150,7 +151,7 @@
         display: inline-block;
         padding: 18px 20px 10px;
         text-decoration: none;
-        transition: all .2s ease-out;
+        transition: all 1s ease-out;
 
       }
 
@@ -168,7 +169,7 @@
       #close-info-screen svg {
         width: 100%;
         height: auto;
-        transition: all .2s ease-out;
+        transition: all 1s ease-out;
       }
       #close-info-screen:hover svg {
         transform: scale(0.8);
@@ -184,14 +185,15 @@
         display: block;
         padding: 12px 20px 8px;
         text-decoration: none;
-        transition: all .2s ease-out;
+        transition: all 1s ease-out;
         position: absolute;
         top: 50px;
         right: 0;
         font-size:16px;
         text-transform: uppercase;
         transform: translateX(100%);
-        box-shadow: 0 0 20px rgba(255,255,255,0.7)
+        box-shadow: 0 0 20px rgba(255,255,255,0.7);
+        z-index: 2000;
       }
       #info-link.show {
         transform: translateX(0);
@@ -214,9 +216,9 @@
       <h1>Avey Tare</h1>
       <h2>Cows on Hourglass Pond</h2>
       <ul class="info">
-          <li><a href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
-          <li><a href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
-          <li><a href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>          
+          <li><a target="_blank" href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
+          <li><a target="_blank" href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
+          <li><a target="_blank" href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>          
       </ul>
       <a href="#" id="close-info-screen">
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
