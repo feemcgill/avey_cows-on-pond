@@ -15,17 +15,6 @@
     <!-- <meta name="viewport" content="width=900, user-scalable=no"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-
-    <script>
-      var ww = window.innerWidth;
-      // alert('phuc ' +  ww  + ' ' + screen.width);
-      // if (ww < 800) {
-      //   alert('smol');
-      //   document.write('');
-      // } else {
-      //   document.write('<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">');
-      // }
-    </script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <base href="/"/>
     <!-- ICONS / WEBAPP -->
@@ -34,26 +23,26 @@
 
     <!-- DESCRIPTION -->
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%=require('./assets/img/favicon/apple-touch-icon.png)%>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<%=require(./assets/img/favicon/favicon-32x32.png)%>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%=require(./assets/img/favicon/favicon-16x16.png)%>">
     <link rel="manifest" href="./assets/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="./assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="mask-icon" href="<%=require(./assets/img/favicon/safari-pinned-tab.svg)%>" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
     <meta name="description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
     <meta property="og:title"content="Avey Tare"/> <!-- should be the same as the "Title" tag -->
     <meta property="og:site_name"   content="Avey Tare"/> <!-- Provides Facebook the name that you would like your website to be recognized by -->
-    <meta property="og:image"content="./assets/img/share-image.jpg"/> <!-- Provides Facebook with an image to use when the page is shared -->
+    <meta property="og:image"content="<%=require(./assets/img/share-image.jpg)%>"/> <!-- Provides Facebook with an image to use when the page is shared -->
     <meta property="og:description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more."/> <!-- Provides Facebook with description text to show -->
     <meta name="description"        content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@aveytare">
     <meta name="twitter:creator" content="@aveytare">
-    <meta name="twitter:title" content=“Avey Tare">
+    <meta name="twitter:title" content="Avey Tare">
     <meta name="twitter:description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
-    <meta name="twitter:image" content="./assets/img/share-image.jpg">
+    <meta name="twitter:image" content="<%=require(./assets/img/share-image.jpg )%>">
 
 
     <!-- FONTS -->
@@ -108,7 +97,7 @@
       }
       article {
         position: fixed;
-        background-image: url('./../assets/img/water-bg.jpg');
+        background-image: url("<%=require('./../assets/img/water-bg.jpg')%>");
         background-size: cover;
         top: 20px;
         bottom: 20px;
@@ -148,7 +137,7 @@
         margin: 10px 0;
         border-radius: 10px;
         background-color: #dbab62;
-        background-image: url('./../assets/img/water-bg.jpg');
+        background-image: url("<%=require('./../assets/img/water-bg.jpg')%>");
         background-blend-mode: screen;
         background-size: 50%;
         background-position: center center;
@@ -182,7 +171,7 @@
       #info-link {
         margin: 10px 0;
         border-radius: 10px 0 0 10px;
-        background-image: url('./../assets/img/water-bg.jpg');
+        background-image: url("<%=require('./../assets/img/water-bg.jpg')%>");
         background-size: 50%;
         background-position: center center;
         color: #01092e;
