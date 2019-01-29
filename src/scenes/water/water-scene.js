@@ -36,10 +36,10 @@ export default class WaterScene extends Container {
         s.destroy();
       }})
     }
-    setTimeout(() => {
+    TweenMax.to(this, 1.6,{alpha: 0, onComplete:() => {
       this.callback();
-      this.removeChildren()
-    }, 1600);
+      this.removeChildren()   
+    }})
 
   }
 

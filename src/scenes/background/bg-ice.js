@@ -75,10 +75,12 @@ export default class BgIce extends Sprite {
 
   transitionToIce() {
     this.pond.gotoAndStop(0)
+    this.alpha = 0
     this.pond.alpha = 1
     this.iceBg.alpha = 1
 
     this.resize()
+    TweenMax.to(this, 0.5, {alpha: 1})
     TweenMax.to(this.iceBg, 3, {alpha: 0})
   }
   resize() {

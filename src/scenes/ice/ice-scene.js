@@ -37,10 +37,7 @@ export default class IceScene extends Container {
     Matter.Events.on(engine, 'collisionStart', (event) => {
       const pairs = event.pairs;
       if (pairs[0].bodyB.label == 'bottomhole' || pairs[0].bodyA.label == 'bottomhole') {
-
-        console.log(this.bottomHits);
         if (this.bottomHits % Math.floor(maxBottomHits / 4) == 1) {
-          console.log('break', this.bottomHits)
           setTimeout(() => {
             if ( maxBottomHits - this.bottomHits < 4) {
               this.iceBreak();
