@@ -16,7 +16,7 @@ export default class BgIce extends Sprite {
         
     this.resize = this.resize.bind(this)
 
-
+    this.firstTime = true
 
     let pondCrackSequence = [
       loader.resources.pond.url,
@@ -80,7 +80,13 @@ export default class BgIce extends Sprite {
     this.iceBg.alpha = 1
 
     this.resize()
-    TweenMax.to(this, 0.5, {alpha: 1})
+    if ( this.firstTime ) {
+      this.alpha = 1;
+      this.firstTime = false
+    } else {
+      TweenMax.to(this, 0.5, {alpha: 1})
+
+    }
     TweenMax.to(this.iceBg, 3, {alpha: 0, delay: 0.6})
   }
 
