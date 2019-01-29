@@ -69,7 +69,7 @@ export default class BgIce extends Sprite {
         TweenMax.to(this.pond.scale, 1, {x: 10, y: 10, onComplete:() => {
           this.pond.alpha = 0
         }})
-      }, 200);
+      }, 0);
     }
   }
 

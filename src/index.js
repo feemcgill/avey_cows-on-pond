@@ -32,9 +32,28 @@ app.stage.addChild(bgWrap)
 app.stage.addChild(waterWrap)
 app.stage.addChild(iceWrap)
 
+const loaderBar = document.getElementById("loader-bar")
+const infoLink = document.getElementById('info-link')
+const loadingScreen = document.getElementById('loading-screen')
+
+loader.on('progress',function (loader,res) {
+  loaderBar.style.width = loader.progress + '%';
+})
+loader.on('complete',function (loader,res) {
+ TweenMax.to(loadingScreen, 0.2, {opacity: 0, delay: 0.6, onComplete:() => {
+    loadingScreen.parentNode.removeChild(loadingScreen);
+    initSite()
+ }})
+});
 
 
 loader.load((loader, resources) => {
+ 
+
+});
+
+function initSite() {
+
   bgCover = new BgCover()
   bgIce = new BgIce()
   bgWrap.addChild(bgCover)
@@ -62,11 +81,13 @@ loader.load((loader, resources) => {
       .on('touchmove', handleMove);  
 
 
-  launchIce()
+  launchIce()  
 
+  setTimeout(() => {
+    infoLink.classList.add('show')
+  }, 1000);
 
-
-});
+}
 
 function launchWater() {
   state.currentScene = 'water'
@@ -86,9 +107,7 @@ function launchIce(){
   iceScene.transitionIn()
   TweenMax.to(displacementSprite.scale, .1, {x:0, y:0, onComplete:() => {
     app.stage.filters = []
-
   }})
-
 }
 
 function crackIce() {

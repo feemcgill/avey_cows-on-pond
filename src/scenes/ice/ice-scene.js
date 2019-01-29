@@ -38,11 +38,11 @@ export default class IceScene extends Container {
       const pairs = event.pairs;
       if (pairs[0].bodyB.label == 'bottomhole' || pairs[0].bodyA.label == 'bottomhole') {
 
-
-        if (this.bottomHits % Math.floor(maxBottomHits / 3) == 0) {
+        console.log(this.bottomHits);
+        if (this.bottomHits % Math.floor(maxBottomHits / 4) == 1) {
+          console.log('break', this.bottomHits)
           setTimeout(() => {
-            //this.vidFrames.animationSpeed += 0.05
-            if ( maxBottomHits - this.bottomHits < 3) {
+            if ( maxBottomHits - this.bottomHits < 4) {
               this.iceBreak();
             } else {
               this.crackCallback();

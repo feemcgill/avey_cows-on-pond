@@ -38,8 +38,3 @@ function closeInfoScreen() {
   infoLink.classList.add('show')
   infoScreen.classList.remove('show')
 }
-
-
-setTimeout(() => {
-  infoLink.classList.add('show')
-}, 1500);

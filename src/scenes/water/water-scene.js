@@ -39,7 +39,7 @@ export default class WaterScene extends Container {
     setTimeout(() => {
       this.callback();
       this.removeChildren()
-    }, 1000);
+    }, 1600);
 
   }
 

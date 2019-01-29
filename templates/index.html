@@ -206,6 +206,44 @@
       #info-link:hover {
         background-size: 150px;
       }
+      .privacy-policy-link {
+        margin-top: 20px;
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #e4c69f;
+        display: inline-block;
+      }
+
+      #loading-screen {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        color: #01092e;
+        z-index: 3000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      #loader-track {
+        width: 300px;
+        height: 2px;
+        background: #e4c69f;
+        position: relative;
+
+      }
+      #loader-bar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        background: #01092e;
+        transition: all .2s ease-out;
+      }
       @media only screen and (max-width: 700px) {
         body {
           font-size: 16px;
@@ -235,6 +273,7 @@
           <li><a target="_blank" href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
           <li><a target="_blank" href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>          
       </ul>
+      <a href="#" class="privacy-policy-link">Privacy Policy</a>
       <a href="#" id="close-info-screen">
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="14.431px" height="14.819px" viewBox="13.08 3.77 14.431 14.819" enable-background="new 13.08 3.77 14.431 14.819"
@@ -246,6 +285,14 @@
       </a>
     </div>
     </article>
+    <div id="loading-screen">
+      <div class="loader-in">
+        <h2>Loading</h2>
+        <div id="loader-track">
+          <div id="loader-bar"></div>
+        </div>
+      </div>
+    </div>
   </body>
 
 </html>
