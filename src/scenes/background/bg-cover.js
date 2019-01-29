@@ -16,17 +16,12 @@ export default class BgCover extends Container {
         
     this.resize = this.resize.bind(this)
 
-
-
     this.waterTex = new PIXI.Texture.fromImage(loader.resources.waterBg.url)
     this.coverTex = new PIXI.Texture.fromImage(loader.resources.cover.url)
-
-
 
     this.water = new PIXI.Sprite(this.waterTex)
     this.water.anchor.set(0.5)
     this.addChild(this.water)
-
 
     this.cover = new PIXI.Sprite(this.coverTex)
     this.cover.anchor.set(0.5)
@@ -68,12 +63,10 @@ export default class BgCover extends Container {
     this.cover.y = app.renderer.height / 2
 
     if (state.currentScene == 'water') {
-
       TweenMax.to(this.water, 0.5, {
         x: app.renderer.width/2, 
         y: app.renderer.height/2, 
       })
-
     } 
   }
 
@@ -95,9 +88,9 @@ export default class BgCover extends Container {
       bgScale = map(y, 0, app.renderer.height, 1.2, 1.1)
     }
     if (this.canMove) {
-      TweenMax.to(this.cover, 5, {
-        x: app.renderer.width/2 + (moverX * 4), 
-        y: app.renderer.height/2 + (moverY * 2), 
+      TweenMax.to(this.cover, 1, {
+        x: app.renderer.width/2 + (moverX * 8), 
+        y: app.renderer.height/2 + (moverY * 8), 
       })
       TweenMax.to(this.cover.scale, 10, {
         x: bgScale, 

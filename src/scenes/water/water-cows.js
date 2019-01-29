@@ -25,7 +25,8 @@ function createCows(){
 
   let cowIndex = 0
   let twistCow = false;
-  Matter.Composites.stack(0,0, 2, 2, 0, 0, function(x, y, column, row) {
+  for (let index = 0; index < 8; index++) {
+      //Matter.Composites.stack(0,0, 2, 2, 0, 0, function(x, y, column, row) {
     cowIndex = (cowIndex + 1) % cowTextures.length
     const cow = new PhysicsSprite('swimmer', engine, 0x001)
     const width = cowTextures[cowIndex].orig.width / 2
@@ -49,7 +50,7 @@ function createCows(){
     cow.sprite.buttonmode = true
     cow.sprite.cursor = 'pointer'
     twistCow = !twistCow
-  });
+  };
   return cows;
 }
 
