@@ -14,7 +14,7 @@ const config = {
 
 const debug = {
   iceScene : {
-    timer: 45000,
+    timer: 30000,
     maxCows: 10,
     bottomHits: 9
   },

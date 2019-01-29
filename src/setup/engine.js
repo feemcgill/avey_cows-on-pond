@@ -21,7 +21,7 @@ let matter_renderer = {
   }  
 }
 
-//matter_renderer = {};
+matter_renderer = {};
 
 const engine = Matter.Engine.create(matter_renderer)
 
