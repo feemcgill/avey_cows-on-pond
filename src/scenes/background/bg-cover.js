@@ -34,11 +34,11 @@ export default class BgCover extends Container {
     this.cover.anchor.set(0.5)
     this.container.addChild(this.cover)
 
-    this.maskGraphics = new PIXI.Graphics()
-    this.maskGraphics.beginFill(0xFFFFFF)
-    this.addChild(this.maskGraphics)
+    // this.maskGraphics = new PIXI.Graphics()
+    // this.maskGraphics.beginFill(0xFFFFFF)
+    // this.addChild(this.maskGraphics)
 
-    this.container.mask = this.maskGraphics
+    // this.container.mask = this.maskGraphics
 
     this.resize()
     
@@ -75,12 +75,11 @@ export default class BgCover extends Container {
 
 
 
-    this.pond_size = backgroundContain(app.renderer.width, app.renderer.height, loader.resources.pond.texture.orig.width, loader.resources.pond.texture.orig.height)
-    
-    this.maskGraphics.removeChildren()
-    this.maskGraphics.drawRect(0, 0, this.pond_size.w, this.pond_size.h)    
-    this.maskGraphics.position.x = (app.renderer.width / 2) - (this.maskGraphics.width / 2);
-    this.maskGraphics.position.y = (app.renderer.height / 2) - (this.maskGraphics.height / 2);
+    // this.pond_size = backgroundContain(app.renderer.width, app.renderer.height, loader.resources.pond.texture.orig.width, loader.resources.pond.texture.orig.height)
+    // this.maskGraphics.removeChildren()
+    // this.maskGraphics.drawRect(0, 0, this.pond_size.w, this.pond_size.h)    
+    // this.maskGraphics.position.x = (app.renderer.width / 2) - (this.maskGraphics.width / 2);
+    // this.maskGraphics.position.y = (app.renderer.height / 2) - (this.maskGraphics.height / 2);
 
     if (state.currentScene == 'water') {
       TweenMax.to(this.water, 0.5, {
