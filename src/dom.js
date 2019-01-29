@@ -2,33 +2,43 @@ const infoScreen = document.getElementById('info-screen')
 const infoCloseButton = document.getElementById('close-info-screen')
 const infoLink = document.getElementById('info-link')
 
-// infoLink.addEventListener('click', function (e) {
-//   e.preventDefault()
-//   if (this.classList.contains('show')) {
-//    this.classList.remove('show')
-//    infoScreen.classList.add('show')
-//   }
-// });
 
-// infoCloseButton.addEventListener('click', function (e) {
-//   e.preventDefault()
-//   infoLink.classList.add('show')
-//   infoScreen.classList.remove('show')
-// });
 
-infoLink.onclick = function(e){
+infoLink.addEventListener('touchstart', function (e) {
   e.preventDefault()
-  if (this.classList.contains('show')) {
-   this.classList.remove('show')
-   infoScreen.classList.add('show')
-  }
+  openInfoScreen()
+});
+
+infoCloseButton.addEventListener('touchstart', function (e) {
+  e.preventDefault()
+  closeInfoScreen()
+});
+
+
+infoLink.addEventListener('click', function (e) {
+  e.preventDefault()
+  openInfoScreen()
+});
+
+infoCloseButton.addEventListener('click', function (e) {
+  e.preventDefault()
+  closeInfoScreen()
+});
+
+
+
+function openInfoScreen() {
+  if (infoLink.classList.contains('show')) {
+    infoLink.classList.remove('show')
+    infoScreen.classList.add('show')
+   }
 }
 
-infoCloseButton.onclick = function(e) {
-  e.preventDefault()
+function closeInfoScreen() {
   infoLink.classList.add('show')
   infoScreen.classList.remove('show')
 }
+
 
 setTimeout(() => {
   infoLink.classList.add('show')
