@@ -65,6 +65,33 @@ const backgroundSize = function(containerW, containerH, imgW, imgH) {
     return newDims;    
 }
 
+const backgroundContain = function(containerW, containerH, imgW, imgH) {
+    let newDims = {
+        w: null,
+        h: null,
+        scale: null
+    };
+    const imgRatio = imgW / imgH;
+    if (containerW / imgRatio < containerH) {
+        // Image is 100% wide and shorter than container
+        // new dims must be contaier heigh
+        // newDims.h = containerH;
+        // newDims.w = containerH * imgRatio;
+        
+        newDims.w = containerW;
+        newDims.h = containerW * imgRatio;
+    } else {
+        // Image is 100% wide and taller than container
+        // newDims.w = containerW;
+        // newDims.h = containerW / imgRatio;
+
+        newDims.h = containerH
+        newDims.w = containerH * imgRatio
+    }
+    newDims.scale = newDims.w / imgW;
+    return newDims;    
+}
 
 
-export {shuffleArray, getWindowSize, debounce, map, boxRatio, backgroundSize};
+
+export {shuffleArray, getWindowSize, debounce, map, boxRatio, backgroundSize, backgroundContain};

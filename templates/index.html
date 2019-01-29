@@ -121,6 +121,8 @@
         transition: all 1s ease-out;
         transform: scale(0);
         pointer-events: none;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
       article.show {
         transform: scale(1);
@@ -138,7 +140,9 @@
         font-size: 1.2em;
         margin-bottom: 0.5em;
       }
-      .info {}
+      .info {
+        margin: auto;
+      }
       .info li a {
         margin: 10px 0;
         border-radius: 10px;
@@ -201,6 +205,16 @@
       #info-link:hover {
         background-size: 150px;
       }
+      @media only screen and (max-width: 700px) {
+        body {
+          font-size: 16px;
+        }
+        #close-info-screen {
+          height: 30px;
+          width: 30px;
+        }
+      }
+
     </style>
         
   <body>

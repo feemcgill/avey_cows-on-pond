@@ -3,7 +3,7 @@ import {TweenMax} from "gsap/TweenMax"
 import app from './../../setup/app'
 import engine from './../../setup/engine'
 import loader from './../../setup/loader'
-import {backgroundSize, map} from './../../helpers'
+import {backgroundSize, map, backgroundContain} from './../../helpers'
 import Matter from 'matter-js'
 import config from './../../setup/config'
 
@@ -82,7 +82,7 @@ export default class BgIce extends Sprite {
     TweenMax.to(this.iceBg, 3, {alpha: 0})
   }
   resize() {
-    const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
+    const bgSize_pond = backgroundContain(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)
 
     this.pond.x = app.renderer.width / 2

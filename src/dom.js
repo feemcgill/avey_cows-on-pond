@@ -5,12 +5,12 @@ const infoLink = document.getElementById('info-link')
 
 
 infoLink.addEventListener('touchstart', function (e) {
-  e.preventDefault()
+  // e.preventDefault()
   openInfoScreen()
 });
 
 infoCloseButton.addEventListener('touchstart', function (e) {
-  e.preventDefault()
+  // e.preventDefault()
   closeInfoScreen()
 });
 
