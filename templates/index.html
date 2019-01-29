@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KL268XJ');</script>
+    <!-- End Google Tag Manager -->
+
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1000, user-scalable=no">
+    <meta name="viewport" content="width=900, user-scalable=no">
 
 
 
@@ -19,35 +29,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <base href="/"/>
     <!-- ICONS / WEBAPP -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-    <!--<link rel="manifest" href="/assets/manifest.json"/>-->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
     <meta name="apple-mobile-web-app-title" content="<%= htmlWebpackPlugin.options.title %>">
-    <link rel="apple-touch-icon" type="image/png" href="/assets/icons/apple-touch-icon.png">
-    <meta name="msapplication-TileColor" content="#FFCFC4" />
-    <meta name="msapplication-TileImage" content="/assets/ico/mstile-144x144.png" />
+
     <!-- DESCRIPTION -->
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>"/>
-    <!-- SOCIAL CARDS -->
-    <meta itemprop="name" content="<%= htmlWebpackPlugin.options.title %>">
-    <meta itemprop="description" content="<%= htmlWebpackPlugin.options.description %>">
-    <meta itemprop="image" content="/assets/imgs/og-card.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="./assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
+    <meta property="og:title"content="Avey Tare"/> <!-- should be the same as the "Title" tag -->
+    <meta property="og:site_name"   content="Avey Tare"/> <!-- Provides Facebook the name that you would like your website to be recognized by -->
+    <meta property="og:image"content="./assets/img/share-image.jpg"/> <!-- Provides Facebook with an image to use when the page is shared -->
+    <meta property="og:description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more."/> <!-- Provides Facebook with description text to show -->
+    <meta name="description"        content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.title %>">
-    <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.description %>">
-    <meta name="twitter:image:src" content="/assets/imgs/twitter-card.jpg">
-    <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="<%= htmlWebpackPlugin.options.site_url %>" />
-    <meta property="og:image" content="/assets/imgs/og-card.jpg" />
-    <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
-    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>" />
+    <meta name="twitter:site" content="@aveytare">
+    <meta name="twitter:creator" content="@aveytare">
+    <meta name="twitter:title" content=“Avey Tare">
+    <meta name="twitter:description" content="Official website for Avey Tare. Cows on Hourglass Pond out March 22nd, 2019. Music, tour dates, videos, and more.">
+    <meta name="twitter:image" content="./assets/img/share-image.jpg">
+
+
     <!-- FONTS -->
-    <script type="text/javascript" src="//fast.fonts.net/jsapi/2da6eb3e-9afc-461e-b8d2-5d7bd4128a2a.js"></script>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Noto+Serif+SC|Playfair+Display" rel="stylesheet"> -->
     <style>
+
+
+      @font-face {
+          font-family: 'oz';
+          src: url('./assets/fonts/OzsWizardScarecrow.eot');
+          src: url('./assets/fonts/OzsWizardScarecrow.eot') format('embedded-opentype'),
+              url('./assets/fonts/OzsWizardScarecrow.woff2') format('woff2'),
+              url('./assets/fonts/OzsWizardScarecrow.woff') format('woff'),
+              url('./assets/fonts/OzsWizardScarecrow.ttf') format('truetype'),
+              url('./assets/fonts/OzsWizardScarecrow.svg#OzsWizardScarecrow') format('svg');
+      }
+
+      /* blue #01092e */
+      /* gold #dbab62 */
       html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
       ol, ul {
         list-style: none;
@@ -70,6 +95,8 @@
         width: 100vw;
         min-height: 100vh;
         margin: 0;
+        font-family: 'oz', serif;
+        font-size: 30px;
       }
       * {
         box-sizing: border-box;
@@ -78,68 +105,130 @@
       canvas {
         display: block;
       }
+      article {
+        position: fixed;
+        background-image: url('./../assets/img/water-bg.jpg');
+        top: 20px;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all .2s ease-out;
+        transform: scale(0);
+        pointer-events: none;
+      }
+      article.show {
+        transform: scale(1);
+        pointer-events: auto;
+      }
+      article .inner {
+        color: #e4c69f;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0.5em;
+      }
+      h2 {
+        font-size: 1.2em;
+        margin-bottom: 0.5em;
+      }
+      .info {}
+      .info li a {
+        margin: 10px 0;
+        border-radius: 10px;
+        background-color: #dbab62;
+        background-image: url('./../assets/img/water-bg.jpg');
+        background-blend-mode: screen;
+        background-size: 50%;
+        background-position: center center;
+        color: #01092e;
+        display: inline-block;
+        padding: 18px 20px 10px;
+        text-decoration: none;
+        transition: all .2s ease-out;
+
+      }
+
+      .info li a:hover {
+        background-size: 150%;
+      }
+      #close-info-screen {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        z-index: 1000;
+        width: 50px;
+        height: 50px;
+      }
+      #close-info-screen svg {
+        width: 100%;
+        height: auto;
+        transition: all .2s ease-out;
+      }
+      #close-info-screen:hover svg {
+        transform: scale(0.8);
+      }
+      #info-link {
+        margin: 10px 0;
+        border-radius: 10px 0 0 10px;
+        background-image: url('./../assets/img/water-bg.jpg');
+        background-size: 50%;
+        background-position: center center;
+        color: #01092e;
+        color: #e4c69f;
+        display: block;
+        padding: 12px 20px 8px;
+        text-decoration: none;
+        transition: all .2s ease-out;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        font-size:16px;
+        text-transform: uppercase;
+        transform: translateX(100%);
+        box-shadow: 0 0 20px rgba(255,255,255,0.7)
+      }
+      #info-link.show {
+        transform: translateX(0);
+      }
+      #info-link:hover {
+        background-size: 150px;
+      }
     </style>
-<script id="shader" type="shader">
-  void main(){
-     gl_FragColor = vec4(1.0,1.0,1.0,1.0);
-  }
-  </script>
-  <script id="fragShader" type="shader-code">
-    precision mediump float;
-    uniform vec2      resolution;
-    uniform float     time;
-    uniform float     alpha;
-    uniform vec2      speed;
-    uniform float     shift;
-    
-    
-    float rand(vec2 n) {
-      //This is just a compounded expression to simulate a random number based on a seed given as n
-        return fract(cos(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-    }
-    
-    float noise(vec2 n) {
-      //Uses the rand function to generate noise
-        const vec2 d = vec2(0.0, 1.0);
-        vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
-        return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
-    }
-    
-    float fbm(vec2 n) {
-      //fbm stands for "Fractal Brownian Motion" https://en.wikipedia.org/wiki/Fractional_Brownian_motion
-        float total = 0.0, amplitude = 1.0;
-        for (int i = 0; i < 4; i++) {
-          total += noise(n) * amplitude;
-          n += n;
-          amplitude *= 0.5;
-        }
-        return total;
-    }
-    
-    void main() {
-        //This is where our shader comes together
-        const vec3 c1 = vec3(126.0/255.0, 0.0/255.0, 97.0/255.0);
-        const vec3 c2 = vec3(173.0/255.0, 0.0/255.0, 161.4/255.0);
-        const vec3 c3 = vec3(0.2, 0.0, 0.0);
-        const vec3 c4 = vec3(164.0/255.0, 1.0/255.0, 214.4/255.0);
-        const vec3 c5 = vec3(0.1);
-        const vec3 c6 = vec3(0.9);
-    
-        //This is how "packed" the smoke is in our area. Try changing 8.0 to 1.0, or something else
-        vec2 p = gl_FragCoord.xy * 8.0 / resolution.xx;
-        //The fbm function takes p as its seed (so each pixel looks different) and time (so it shifts over time)
-        float q = fbm(p - time * 0.1);
-        vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));
-        vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
-        float grad = gl_FragCoord.y / resolution.y;
-        gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 1.0);
-        gl_FragColor.xyz *= 1.0-grad;
-    }
-    </script>
         
   <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL268XJ"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
     <canvas id="canvas" style="position:absolute; top: 0; left: 0; opacity: 1; background: transparent!important;"></canvas>
     <div id="root"></div>
+    <a href="#" id="info-link">Info</a>
+    <article id="info-screen">
+      <div class="inner">
+      <h1>Avey Tare</h1>
+      <h2>Cows on Hourglass Pond</h2>
+      <ul class="info">
+          <li><a href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
+          <li><a href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
+          <li><a href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>          
+      </ul>
+      <a href="#" id="close-info-screen">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="14.431px" height="14.819px" viewBox="13.08 3.77 14.431 14.819" enable-background="new 13.08 3.77 14.431 14.819"
+          xml:space="preserve">
+       <polygon fill="#e4c69f" points="27.088,5.752 25.506,4.169 20.3,9.373 15.094,4.169 13.511,5.752 18.717,10.957 13.511,16.162 
+         15.094,17.746 20.3,12.54 25.506,17.746 27.088,16.162 21.884,10.957 "/>
+       </svg>
+
+      </a>
+    </div>
+    </article>
   </body>
 
 </html>

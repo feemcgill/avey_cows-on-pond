@@ -1,13 +1,13 @@
 const config = {
   iceScene : {
     timer: 120000,
-    maxCows: 20,
+    maxCows: 12,
     bottomHits: 9,
     sendCowsTimer: 3000,
   },
   waterScene: {
     timer: 40000,
-    maxCows: 20,
+    maxCows: 12,
 
   }
 }

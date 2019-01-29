@@ -50,8 +50,6 @@ export default class BgIce extends Sprite {
 
     this.iceBg = new PIXI.Graphics();
     this.iceBg.beginFill(0xFFFFFF)
-    this.iceBg.drawRect(0, 0, app.renderer.width, app.renderer.height)
-    this.iceBg.endFill()
     this.addChild(this.iceBg)
 
        
@@ -83,11 +81,17 @@ export default class BgIce extends Sprite {
     TweenMax.to(this.iceBg, 3, {alpha: 0})
   }
   resize() {
+    console.log('ICE RESIZE')
     const bgSize_pond = backgroundSize(app.renderer.width, app.renderer.height, this.pondTextureArray[0].baseTexture.width, this.pondTextureArray[0].baseTexture.height)
     this.pond.scale.set(bgSize_pond.scale)
 
     this.pond.x = app.renderer.width / 2
     this.pond.y = app.renderer.height / 2
+    
+    
+    this.iceBg.removeChildren()
+    this.iceBg.drawRect(0, 0, app.renderer.width, app.renderer.height)
+
 
   }
 

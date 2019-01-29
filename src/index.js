@@ -8,6 +8,7 @@ import loader from './setup/loader'
 import BgIce from './scenes/background/bg-ice'
 import BgCover from './scenes/background/bg-cover'
 import TweenMax from 'gsap/TweenMaxBase';
+import './dom'
 
 document.body.appendChild(app.view);
 
@@ -131,8 +132,10 @@ window.addEventListener("resize",function(e){
   
 window.addEventListener("resize",debounce(function(e){
   // Scale scenes
-  waterScene.resize();
-  iceScene.resize();
+  waterScene.resize()
+  iceScene.resize()
+  bgIce.resize()
+  bgCover.resize()
 }));  
 
 export {state}

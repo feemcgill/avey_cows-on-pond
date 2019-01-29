@@ -59,7 +59,7 @@ const build = (env, options) => {
         cleanOptions
       ),
       new HtmlWebpackPlugin({
-        title: "Avey Tare |||| Cows on Hourglass Pond",
+        title: "Avey Tare | Cows on Hourglass Pond",
         description: "",
         site_url: "",
         template: './templates/index.html'

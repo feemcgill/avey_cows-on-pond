@@ -64,7 +64,7 @@ export default class WaterScene extends Container {
     }, 1000);
   }
   resize() {
-    this.WaterCows.resize()
+    //this.WaterCows.resize()
     this.WaterBorders.createBorders()
   }
 
