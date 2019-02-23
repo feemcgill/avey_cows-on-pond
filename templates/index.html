@@ -192,9 +192,6 @@
       #info-link.show {
         transform: translateX(0);
       }
-      #info-link:hover {
-        background-size: 150px;
-      }
       .privacy-policy-link {
         margin-top: 20px;
         font-size: 12px;
@@ -242,7 +239,15 @@
           width: 30px;
         }
       }
-
+      @media only screen and (min-width: 700px) {
+        body {
+          font-size: 16px;
+        }
+        #close-info-screen {
+          height: 30px;
+          width: 30px;
+        }
+      }
     </style>
         
   <body>
