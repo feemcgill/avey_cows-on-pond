@@ -146,12 +146,11 @@
         padding: 18px 20px 10px;
         text-decoration: none;
         transition: all 1s ease-out;
+        pointer-events: auto;
 
       }
 
-      .info li a:hover {
-        background-size: 150%;
-      }
+
       #close-info-screen {
         position: absolute;
         top: 30px;
@@ -192,6 +191,7 @@
       #info-link.show {
         transform: translateX(0);
       }
+
       .privacy-policy-link {
         margin-top: 20px;
         font-size: 12px;
@@ -239,15 +239,14 @@
           width: 30px;
         }
       }
-      @media only screen and (min-width: 700px) {
-        body {
-          font-size: 16px;
+      /* @media only screen and (min-width: 700px) {
+        .info li a:hover {
+          background-size: 150%;
         }
-        #close-info-screen {
-          height: 30px;
-          width: 30px;
-        }
-      }
+        #info-link:hover {
+          background-size: 150px;
+        }        
+      } */
     </style>
         
   <body>
