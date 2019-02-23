@@ -110,13 +110,11 @@
         justify-content: center;
         transition: all 1s ease-out;
         transform: scale(0);
-        pointer-events: none;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
       article.show {
         transform: scale(1);
-        pointer-events: auto;
       }
       article .inner {
         color: #e4c69f;
@@ -239,14 +237,14 @@
           width: 30px;
         }
       }
-      /* @media only screen and (min-width: 700px) {
+      @media only screen and (min-width: 700px) {
         .info li a:hover {
           background-size: 150%;
         }
         #info-link:hover {
           background-size: 150px;
         }        
-      } */
+      }
     </style>
         
   <body>
@@ -254,7 +252,7 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL268XJ"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-    <canvas id="canvas" style="position:absolute; top: 0; left: 0; opacity: 1; background: transparent!important;"></canvas>
+    <canvas id="canvas" style="position:absolute; top: 0; left: 0; opacity: 1; background: transparent!important; pointer-events: none;"></canvas>
     <div id="root"></div>
     <a href="#" id="info-link">Info</a>
     <article id="info-screen">
@@ -262,12 +260,12 @@
       <h1>Avey Tare</h1>
       <h2>Cows on Hourglass Pond</h2>
       <ul class="info">
-          <li><a target="_blank" href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
-          <li><a target="_blank" href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
-          <li><a target="_blank" href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>  
-          <li><a target="_blank" href="https://www.bandsintown.com/a/127714">Tour</a></li>      
+          <li><a target="_blank" class="ex-link" href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
+          <li><a target="_blank" class="ex-link" href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
+          <li><a target="_blank" class="ex-link" href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>  
+          <li><a target="_blank" class="ex-link" href="https://www.bandsintown.com/a/127714">Tour</a></li>      
       </ul>
-      <a href="#" class="privacy-policy-link">Privacy Policy</a>
+      <a href="#" class="privacy-policy-link ex-link">Privacy Policy</a>
       <a href="#" id="close-info-screen">
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="14.431px" height="14.819px" viewBox="13.08 3.77 14.431 14.819" enable-background="new 13.08 3.77 14.431 14.819"

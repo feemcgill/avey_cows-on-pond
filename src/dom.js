@@ -2,6 +2,9 @@ const infoScreen = document.getElementById('info-screen')
 const infoCloseButton = document.getElementById('close-info-screen')
 const infoLink = document.getElementById('info-link')
 
+function openInNewTab(url) {
+  window.location.href = url
+}
 
 
 infoLink.addEventListener('touchstart', function (e) {
@@ -37,4 +40,14 @@ function openInfoScreen() {
 function closeInfoScreen() {
   infoLink.classList.add('show')
   infoScreen.classList.remove('show')
+}
+
+const links = document.getElementsByClassName('ex-link');
+
+for (let i = 0; i < links.length; i++) {
+  const e = links[i];
+  const url = e.href;
+  e.addEventListener('touchstart', function (e) {
+    openInNewTab(url)
+  })
 }
