@@ -113,6 +113,10 @@
         overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
+
+      #tour-screen {
+        display: block;
+      }
       article.show {
         transform: scale(1);
       }
@@ -148,7 +152,7 @@
 
       }
 
-
+      #close-tour-screen,
       #close-info-screen {
         position: absolute;
         top: 30px;
@@ -157,14 +161,19 @@
         width: 50px;
         height: 50px;
       }
+      #close-tour-screen svg,
       #close-info-screen svg {
         width: 100%;
         height: auto;
         transition: all 1s ease-out;
       }
+
+      #close-tour-screen:hover svg,
       #close-info-screen:hover svg {
         transform: scale(0.8);
       }
+
+      #tour-link,
       #info-link {
         margin: 10px 0;
         border-radius: 10px 0 0 10px;
@@ -186,10 +195,15 @@
         box-shadow: 0 0 20px rgba(255,255,255,0.7);
         z-index: 2000;
       }
+
+      #tour-link.show,
       #info-link.show {
         transform: translateX(0);
       }
 
+      #tour-link {
+        top: 100px;
+      }
       .privacy-policy-link {
         margin-top: 20px;
         font-size: 12px;
@@ -245,6 +259,19 @@
           background-size: 150px;
         }        
       }
+
+      #the-box {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+      }
+
+      .bit-show-upcoming {
+        display: none;
+      }
     </style>
         
   <body>
@@ -252,18 +279,19 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL268XJ"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-    <canvas id="canvas" style="position:absolute; top: 0; left: 0; opacity: 1; background: transparent!important; pointer-events: none;"></canvas>
+    <canvas id="canvas" style="position:fixed; top: 0; left: 0; bottom: 0; right: 0; opacity: 1; background: transparent!important; pointer-events: none;"></canvas>
     <div id="root"></div>
     <a href="#" id="info-link">Info</a>
+    <a href="#" id="tour-link">Tour</a>
     <article id="info-screen">
       <div class="inner">
       <h1>Avey Tare</h1>
       <h2>Cows on Hourglass Pond</h2>
       <ul class="info">
-          <li><a target="_blank" class="ex-link" href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Pre-order Vinyl</a></li>
+          <li><a target="_blank" class="ex-link" href="http://smarturl.it/AveyTareCowsLP?utm_source=aveytare&utm_medium=website">Order LP/CD</a></li>
           <li><a target="_blank" class="ex-link" href="http://smarturl.it/CowsOnHourglassPond">Download and Stream</a></li>
           <li><a target="_blank" class="ex-link" href="http://smarturl.it/SaturdaysAgainYT">Watch “Saturdays (Again)” </a></li>  
-          <li><a target="_blank" class="ex-link" href="https://www.bandsintown.com/a/127714">Tour</a></li>      
+          <!-- <li><a target="_blank" class="ex-link" href="https://www.bandsintown.com/a/127714">Tour</a></li>       -->
       </ul>
       <a href="#" class="privacy-policy-link ex-link">Privacy Policy</a>
       <a href="#" id="close-info-screen">
@@ -277,6 +305,20 @@
       </a>
     </div>
     </article>
+    <article id="tour-screen">
+      <div class="inner">
+          <h1>Tour</h1>
+          <script charset="utf-8" src="https://widget.bandsintown.com/main.min.js"></script><a class="bit-widget-initializer" data-artist-name="avey tare" data-display-local-dates="false" data-display-past-dates="false" data-auto-style="false" data-text-color="#ffffff" data-link-color="#e4c69f" data-popup-background-color="#FFFFFF" data-background-color="rgba(0,0,0,0)" data-display-limit="" data-link-text-color="#01092e" data-display-lineup="false" data-separator-color="rgba(255, 255, 255, 0.5)"></a> 
+          <a href="#" id="close-tour-screen">
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              width="14.431px" height="14.819px" viewBox="13.08 3.77 14.431 14.819" enable-background="new 13.08 3.77 14.431 14.819"
+              xml:space="preserve">
+           <polygon fill="#e4c69f" points="27.088,5.752 25.506,4.169 20.3,9.373 15.094,4.169 13.511,5.752 18.717,10.957 13.511,16.162 
+             15.094,17.746 20.3,12.54 25.506,17.746 27.088,16.162 21.884,10.957 "/>
+           </svg>
+          </a>        
+      </div>
+    </article>
     <div id="loading-screen">
       <div class="loader-in">
         <h2>Loading</h2>
@@ -285,6 +327,8 @@
         </div>
       </div>
     </div>
+
+    <div id="the-box"></div>
   </body>
 
 </html>

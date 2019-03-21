@@ -34,6 +34,7 @@ app.stage.addChild(iceWrap)
 
 const loaderBar = document.getElementById("loader-bar")
 const infoLink = document.getElementById('info-link')
+const tourLink = document.getElementById('tour-link')
 const loadingScreen = document.getElementById('loading-screen')
 
 loader.on('progress',function (loader,res) {
@@ -85,10 +86,13 @@ function initSite() {
 
   setTimeout(() => {
     infoLink.classList.add('show')
+    tourLink.classList.add('show')
   }, 1000);
 
 }
-
+function thisIsATest() {
+  // just seeing what this looks like on FB!!
+}
 function launchWater() {
   state.currentScene = 'water'
   setTimeout(() => {
