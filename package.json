@@ -37,7 +37,7 @@
     "build": "webpack --mode production --env.NODE_ENV"
   },
   "dependencies": {
-    "gsap": "^2.0.2",
+    "gsap": "^3.6.0",
     "matter-js": "^0.14.2",
     "pixi.js": "^4.8.5"
   }
